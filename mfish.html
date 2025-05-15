@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+      }
+      
+        .background {
+          background-image: url("Img/Screenshot_2025-03-24_114434 (1).jpg");
+          width: 100%;
+          height: 100%;
+          position: relative;
+         }
+         
+         h3 {
+           margin:0;
+          padding: 0;
+         }
+         
+         h4 {
+           margin: 0;
+           padding: 0;
+         }
+         
+         .title {
+           text-align: center;
+           position: relative;
+           top: 5%;
+         }
+         
+         .userBtn {
+           position: relative;
+           top: 50px;
+           left: 43%;
+           border-radius: 20px;
+           background-color: yellow;
+         }
+         
+         .fermyImg {
+           height: 50px; 
+           width: 50px;
+           margin-top: 3px;
+         }
+         
+         .showBusters {
+           position: relative;
+           top: 55px;
+           left: 43%;
+         }
+         
+         .newImg {
+           height: 50px; 
+           width: 50px;
+           margin-top: 6px;
+         }
+         
+         .showBusters{
+           width: 100px;
+           height: 200px;
+           display: none;
+         }
+         
+         a {
+           text-decoration: none;
+         }
+         
+         .back {
+          height: 50px;
+          width: 50px; 
+         }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <a href="director.html"><img src="Img/1746667598930.png" class="back"></a>
+      <h3 class="title">Mfish</h3>
+      
+      <div class="mainarea">
+       <button onclick="goUsers()" class="userBtn">users</button>
+       <div class="showBusters" id="showBusters">
+         <a href="fermymf.html"><img  class="fermyImg" src="Img/Imp design 2.1-01 (1)-7.png">
+         <h4>Fermy</h4></a>
+         <a href="newuser.html"><img class="newImg" src="Img/1000005475.png">
+         <h4>add new</h4></a>
+       </div>
+      </div>
+    
+    </div>
+    
+    <script>
+      function goUsers() {
+        var show = document.getElementById("showBusters");
+        
+        if (show.style.display === "none") {
+          show.style.display = "block";
+        } else  {
+          show.style.display = "none";
+        }
+        }
+    </script>
+  </body>
+</html>
