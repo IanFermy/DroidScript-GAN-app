@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .background {
+        height: 100%;
+        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
+        background-size: cover;
+      }
+      
+     .title {
+       text-align: center;
+       position: relative;
+       top: 50px;
+       
+      } 
+      
+      img {
+        height: 80px;
+        width: 80px;
+        position: relative;
+        left: 145px;
+        top: 20px;
+      }
+      
+      button{
+        display: block;
+        margin: 5px;
+      }
+      
+      .display {
+        border: 2px solid black;
+        height: 450px;
+        width: 80%;
+        position: relative;
+        left: 35px;
+        top: 20px;
+      }
+      
+      .userClass {
+        position: relative;
+        left: 50%;
+       }
+       
+       .userName {
+         position: relative;
+         left: 50%
+       }
+       
+       .formTitle {
+         text-align: center;
+       }
+       
+       .dateInput {
+         position: relative;
+         left: 30%;
+         bottom: 15px;
+       }
+       
+       .billInputName {
+         position: relative;
+         right: 130px;
+         top: 10px;
+       }
+       
+       .billInput {
+         position: relative;
+         right: 125px;
+         top: 11px;
+         margin: 0px;
+         padding: 0px;
+       }
+       
+       .stipendInput {
+         position: relative;
+         right: 114px;
+         top: 11px;
+       }
+       
+       .stipendInputName {
+         position: relative;
+         right: 115px;
+         top: 10px;
+       }
+       
+       .allowanceName {
+         position: relative;
+         left: 147px;
+         bottom: 18px;
+       }
+       
+       .allowanceInput {
+          position: relative;
+          left: 150px;
+          bottom: 15px;
+       }
+       
+       .displaya {
+         position: relative;
+         top: 10px;
+       }
+       
+       .displayb {
+         position: relative;
+         top: 50px;
+       }
+       
+       .displayc {
+        
+       }
+      
+      .amount {
+        position: relative;
+        top: 20px;
+        display: inline-block;
+      }
+      
+      .reason {
+        position: relative;
+        top: 50px;
+        right: 180px;
+      }
+      
+      .displayb {
+        display: inline-block;
+      }
+      
+      .responseTitle {
+        
+      }
+      
+      .responseSalaryName {
+      position: relative;
+      bottom: 15px;
+      }
+      
+      .responseSalaryValue {
+      position: relative;
+      bottom: 15px;
+      }
+      
+      .responseAllowanceName {
+      position: relative;
+      top: 5px;
+      right: 60px;
+      }
+      
+      .responseAllowanceValue {
+        position: relative;
+        top: 5px;
+        right: 60px;
+      }
+      
+      .responseProjectName {
+        position: relative;
+        top:25px;
+        right: 150px;
+      }
+      
+      .responseProjectValue {
+        position: relative;
+        top: 25px;
+        right: 150px;
+      }
+      
+      .displayc {
+        position: relative;
+        top: 60px;
+      }
+      
+      .question {
+        
+      }
+      
+      .questionResponse  {
+      
+      }
+      
+      .overall {
+      
+      }
+      
+       .projectInput {
+         
+       }
+       
+       .projectInputName {
+         
+       }
+       
+       .depositTitle {
+         text-align: center;
+       }
+       
+       .nameName {
+         
+       }
+       
+       .nameValue {
+       
+       }
+       
+       .accFrom {
+         position: relative;
+         top: 20px;
+         right: 50px;
+       }
+       
+       .accValue {
+         position: relative;
+         top: 20px;
+         right: 50px;
+      }
+      
+      .accTo {
+        position: relative;
+        top: 35px;
+        right: 124px;
+      }
+      
+      .accToValue {
+        position: relative;
+        top: 35px;
+        right: 124px;
+      }
+       
+       .border {
+         background: blue;
+         height: 10px;
+         width: 100px;
+         position: relative;
+         top: 35px;
+       }
+       
+       .displayd {
+         position: relative;
+         top: 30px;
+       }
+       
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <h3 class="title">powers</h3>
+      <img class="img" src="Img/1747433633213.png">
+      <button onclick="financial()">financial request</button>
+      <button onclick="deposit()">deposit request</button>
+      
+      <div class="display" id="display"></div>
+    </div>
+      <script>
+      
+      
+      
+        function financial() {
+         var display =  document.getElementById("display");
+         
+          var userClass = document.createElement("span");
+          userClass.innerText = "X";
+          userClass.className = "userClass";
+          display.appendChild(userClass);
+          
+          var userName = document.createElement("h4");
+          userName.innerText = "X";
+          userName.className = "userName";
+          display.appendChild(userName);
+          
+          var formTitle = document.createElement("h3");
+          formTitle.innerText = "Financial Request Form";
+          formTitle.className = "formTitle";
+          display.appendChild(formTitle);
+          
+          var dateInput = document.createElement("input");
+          dateInput.type= "date";
+          dateInput.placeholder = "date";
+          dateInput.className = "dateInput";
+          display.appendChild(dateInput);
+          
+          var billInput = document.createElement("input");
+          billInput.className = "billInput";
+          var billInputName = document.createElement("span");
+          billInputName.className = "billInputName";
+           billInputName.innerText = "bill";
+           display.appendChild(billInputName);
+          billInput.type= "checkbox";
+          billInput.value= "bill";
+          display.appendChild(billInput);
+          
+          var stipendInput = document.createElement("input");
+          stipendInput.className = "stipendInput";
+          var stipendInputName = document.createElement("span");
+          stipendInputName.className = "stipendInputName";
+           stipendInputName.innerText = "stipend";
+           display.appendChild(stipendInputName);
+          stipendInput.type= "checkbox";
+          stipendInput.value= "stipend";
+          display.appendChild(stipendInput);
+          
+          var allowanceInput = document.createElement("input");
+          allowanceInput.className = "allowanceInput";
+          var allowanceName = document.createElement("span");
+          allowanceName.className = "allowanceName";
+           allowanceName.innerText = "allowance";
+           display.appendChild(allowanceName);
+          allowanceInput.type= "checkbox";
+          allowanceInput.value= "allowance";
+          display.appendChild(allowanceInput);;
+        
+        var projectInput = document.createElement("input");
+        projectInput.className = "projectInput";
+          var projectInputName = document.createElement("span");
+          projectInputName.className = "projectInputName";
+           projectInputName.innerText = "project cap";
+           display.appendChild(projectInputName);
+          projectInput.type= "checkbox";
+          projectInput.value= "project";
+          display.appendChild(projectInput);
+          
+          var displaya = document.createElement("div");
+displaya.innerHTML = `
+  <label>Salary:</label>
+  <span id="salary">Loading...</span><br>
+  <label>Stipend:</label>
+  <span id="stipend">Loading...</span><br>
+  <label>Allowance:</label>
+  <span id="allowance">Loading...</span><br>
+  <label>Project Cap:</label>
+  <span id="project">Loading...</span>
+`;
+displaya.className="displaya";
+display.appendChild(displaya); // Add this line to actually show the element
+          
+        var amount =   document.createElement("input");
+        amount.placeholder = "amount requested";
+        amount.className = "amount";
+        displaya.appendChild(amount);
+        
+        var reason = document.createElement("select");
+        reason.className = "reason";
+        displaya.appendChild(reason);
+        
+        var displayb = document.createElement("div");
+        displayb.className = "displayb";
+        display.appendChild(displayb);
+        
+       var responseTitle =  document.createElement("h4");
+       responseTitle.innerText = "remainder"; 
+       responseTitle.className = "responseTitle";
+       displayb.appendChild(responseTitle);
+       
+       var responseSalaryName =  document.createElement("span");
+       responseSalaryName.innerText = "salary:  ";
+       responseSalaryName.className = "responseSalaryName";
+       displayb.appendChild(responseSalaryName);
+          
+          var responseSalaryValue =  document.createElement("span");
+          responseSalaryValue.innerText = "X";
+          responseSalaryValue.className = "responseSalaryValue";
+       displayb.appendChild(responseSalaryValue);
+       
+       var responseAllowanceName =  document.createElement("span");
+       responseAllowanceName.innerText = "allowance: ";
+       responseAllowanceName.className = "responseAllowanceName";
+       displayb.appendChild(responseAllowanceName);
+          
+          var responseAllowanceValue =  document.createElement("span");
+          responseAllowanceValue.innerText = "X";
+          responseAllowanceValue.className = "responseAllowanceValue";
+       displayb.appendChild(responseAllowanceValue);
+       
+       var responseProjectName =  document.createElement("span");
+       responseProjectName.innerText = "project cap: ";
+       responseProjectName.className = "responseProjectName";
+       displayb.appendChild(responseProjectName);
+          
+          var responseProjectValue =  document.createElement("span");
+          responseProjectValue.innerText = "X";
+          responseProjectValue.className = "responseProjectValue";
+       displayb.appendChild(responseProjectValue);
+       
+       var displayc = document.createElement("div");
+       displayc.className = "displayc";
+       display.appendChild(displayc);
+       
+       var question = document.createElement("p");
+       question.innerText = "Is the level of return appropriate for the requested amount?";
+       question.className = "question";
+       displayc .appendChild(question);
+       
+       var questionResponse = document.createElement("span");
+       questionResponse.className="questionResponse";
+       displayc.appendChild(questionResponse);
+       
+       var overall = document.createElement("span");
+       overall.className = "overall";
+       displayc.appendChild(overall);
+          }
+        
+        function deposit() {
+          var display = document.getElementById("display");
+          
+          var title =  document.createElement("h3");
+          title.innerText = "deposit slip";
+          title.className = "depositTitle";
+          display.appendChild(title);
+          
+          var nameName = document.createElement("span");
+          nameName.innerText = "name";
+          display.appendChild(nameName);
+          nameName.className = "nameName";
+          var nameValue = document.createElement("span");
+          nameValue.innerText = "X";
+          nameValue.className = "nameValue";
+          display.appendChild(nameValue);
+          
+          var accFrom= document.createElement("span");
+          accFrom.className = "accFrom";
+          var accValue = document.createElement("span");
+          accValue.className = "accValue";
+          accValue.innerText = "X";
+          accFrom.innerText = "from acc";
+          display.appendChild(accFrom);
+          display.appendChild(accValue);
+          
+         var accTo = document.createElement("span");
+         accTo.className = "accTo";
+         accTo.innerText = "to acc";
+         display.appendChild(accTo);
+         var accToValue = document.createElement("span");
+         accToValue.className = "accToValue";
+         accToValue.innerText = "X";
+         display.appendChild(accToValue);
+         
+         var border = document.createElement("div");
+         border.className = "border";
+         display.appendChild(border);
+         
+         var displayd = document.createElement("div");
+         displayd.className = "displayd";
+         display.appendChild(displayd);
+         
+         var date = document.createElement("input");
+         date.type = "date";
+         displayd.appendChild(date);
+          
+          var total = document.createElement("input");
+          total.placeholder = "deposit amount";
+          displayd.appendChild(total);
+          
+          var source = document.createElement("input");
+          source.placeholder = "source";
+          displayd.appendChild(source);
+        }
+      </script>
+  </body>
+</html>

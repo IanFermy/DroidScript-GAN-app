@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: white;
+      }
+      .powerimg {
+        height: 50px;
+        width: 50px;
+      }
+      
+      .title {
+        position: relative;
+        left: 150px;
+      }
+      
+      .display {
+        border: 2px solid black;
+        height: 250px;
+        position: relative;
+        top: 100px;
+        padding: 10px;
+      }
+      
+      .message {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      
+      .input-group {
+        margin-top: -30px;
+        margin-bottom: 15px;
+      }
+      
+      .submit-btn-container {
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">
+      <img class="powerimg" src="Img/1747433633213.png">
+      <h3>Powers</h3>
+    </div>
+    <button onclick="bailout()">bailout request</button>
+    <div class="display" id="display"></div>
+    
+    <script>
+      var displayHere = document.getElementById("display");
+      // Load names from localStorage or initialize empty array
+      var nameArr = JSON.parse(localStorage.getItem('bailoutNames')) || [];
+      // Load bailout entries from localStorage or initialize empty array
+      var bailoutEntries = JSON.parse(localStorage.getItem('bailoutEntries')) || [];
+      var currentName = ""; // To store the name between functions
+      
+      function bailout() {
+        displayHere.innerHTML = ''; // Clear previous content
+        
+        var bailoutTitle = document.createElement("h3");
+        bailoutTitle.innerText = "bailout";
+        bailoutTitle.style.position = "relative";
+        bailoutTitle.style.left = "60px";
+        displayHere.appendChild(bailoutTitle);
+        
+        var bailoutImg = document.createElement("img");
+        bailoutImg.src = "Img/1747591942681.png";
+        bailoutImg.style.position = "relative";
+        bailoutImg.style.height = "100px";
+        bailoutImg.style.width = "100px";
+        bailoutImg.style.right = "-200px";
+        bailoutImg.style.top = "-50px";
+        displayHere.appendChild(bailoutImg);
+        
+        // Create container for input group
+        var inputGroup = document.createElement("div");
+        inputGroup.className = "input-group";
+        
+        // Create input label
+        var inputLabel = document.createElement("label");
+        inputLabel.htmlFor = "name";
+        inputLabel.innerText = "Buster:";
+        inputLabel.style.marginRight = "10px";
+        inputLabel.style.marginLeft = "5px";
+        
+        // Create input field
+        var nameInput = document.createElement("input");
+        nameInput.id = "name";
+        
+        // Create container for submit button
+        var submitBtnContainer = document.createElement("div");
+        submitBtnContainer.className = "submit-btn-container";
+        
+        // Create submit button
+        var submitButton = document.createElement("button");
+        submitButton.innerText = "Submit";
+        submitButton.onclick = function() {
+          nameCheck();
+        };
+        
+        // Create message div
+        var messageDiv = document.createElement("div");
+        messageDiv.className = "message";
+        messageDiv.id = "message";
+        
+        // Append all elements
+        inputGroup.appendChild(inputLabel);
+        inputGroup.appendChild(nameInput);
+        submitBtnContainer.appendChild(submitButton);
+        
+        displayHere.appendChild(inputGroup);
+        displayHere.appendChild(submitBtnContainer);
+        displayHere.appendChild(messageDiv);
+      }
+      
+      function nameCheck() {
+        var nameInput = document.getElementById("name");
+        var name = nameInput.value.trim();
+        var messageDiv = document.getElementById("message");
+        
+        if (name === "") {
+          messageDiv.innerText = "Please enter a name!";
+          messageDiv.style.color = "red";
+          return;
+        }
+        
+        if (nameArr.includes(name)) {
+          existingNameAction(name);
+        } else {
+          nameArr.push(name);
+          // Save to localStorage
+          localStorage.setItem('bailoutNames', JSON.stringify(nameArr));
+          messageDiv.innerText = "Name added successfully!";
+          messageDiv.style.color = "green";
+          nameInput.value = "";
+          currentName = name; // Store the name for later use
+          newName(name);
+        }
+      }
+      
+      function existingNameAction(existingName) {
+        displayHere.innerHTML = "";
+        displayHere.innerText = "NO BAILOUT OPTIONS EXIST";
+      }
+      
+      function newName(name) {
+        displayHere.innerHTML = "";
+        
+        var userImg = document.createElement("img");
+        userImg.src = "Img/1747592013316.png";
+        userImg.style.height = "100px";
+        userImg.style.width = "100px";
+        userImg.style.position = "relative";
+        userImg.style.bottom = "13px";
+        userImg.style.left = "150px";
+        displayHere.appendChild(userImg);
+        
+        var title = document.createElement("h3");
+        title.innerText = "fresh";
+        title.style.textAlign = "center";
+        title.style.margin = "0px";
+        title.style.position = "relative";
+        title.style.bottom = "15px";
+        displayHere.appendChild(title); 
+        
+        var welcome = document.createElement("p");
+        welcome.style.textAlign= "center";
+        welcome.innerText = "GAN welcomes " + name;
+        displayHere.appendChild(welcome);
+        
+        var bailoutInput = document.createElement("input");
+        bailoutInput.placeholder = "bailout amount";
+        bailoutInput.id = "bailoutAmt";
+        bailoutInput.style.margin = "10px";
+        displayHere.appendChild(bailoutInput);
+        
+        var submitBailout = document.createElement("button");
+        submitBailout.innerText = "Submit Bailout";
+        submitBailout.onclick = function() {
+          goBailout();
+        };
+        displayHere.appendChild(submitBailout);
+        
+        var messageDiv = document.createElement("div");
+        messageDiv.className = "message";
+        messageDiv.id = "bailoutMessage";
+        displayHere.appendChild(messageDiv);
+      }
+      
+      function goBailout() {
+        var amount = document.getElementById("bailoutAmt").value.trim();
+        var messageDiv = document.getElementById("bailoutMessage");
+        
+        if (!amount || isNaN(amount)) {
+          messageDiv.innerText = "Please enter a valid amount!";
+          messageDiv.style.color = "red";
+          return;
+        }
+        
+        // Create new bailout entry
+        var newEntry = {
+          name: currentName,
+          amount: parseFloat(amount),
+          date: new Date().toISOString()
+        };
+        
+        // Add to entries array
+        bailoutEntries.push(newEntry);
+        
+        // Save to localStorage
+        localStorage.setItem('bailoutEntries', JSON.stringify(bailoutEntries));
+        
+        // Show success message
+        messageDiv.innerText = `Bailout of ${amount} recorded for ${currentName}!`;
+        messageDiv.style.color = "green";
+        
+        // Clear the input
+        document.getElementById("bailoutAmt").value = "";
+      }
+    </script>
+  </body>
+</html>

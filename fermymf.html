@@ -2,8 +2,223 @@
 <html>
   <head>
     <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        color: black; /* Changed to black text */
+      }
+      .background {
+        min-height: 100vh;
+        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      .name {
+        position: absolute;
+        top: 50px;
+        left: 180px;
+        color: black; /* Ensure text is black */
+      }
+      .imp {
+        height: 90px;
+        width: 90px;
+        position: absolute;
+        left: 250px;
+        top: 110px;
+      }
+      h4, h3 {
+        margin: 0;
+        padding: 0;
+        color: black; /* Ensure headings are black */
+      }
+      .feed {
+        margin-top: 100px;
+        margin-left: 20px;
+      }
+      .fishonly {
+        margin-top: 50px;
+        padding: 20px;
+        background-color: rgba(255,255,255,0.7); /* Lighter background for readability */
+        border-radius: 10px;
+        color: black;
+      }
+      label {
+        display: inline-block;
+        width: 150px;
+        color: black;
+      }
+      .line {
+        height: 2px;
+        background: black; /* Changed to black */
+        margin: 10px 0;
+      }
+      .expenseArea {
+        margin: 20px;
+        padding: 15px;
+        background-color: rgba(255,255,255,0.7); /* Lighter background */
+        border-radius: 8px;
+        color: black;
+        display: none; /* Hidden by default */
+      }
+      .expense-item {
+        margin-bottom: 8px;
+        padding: 8px;
+        background-color: rgba(0,0,0,0.1); /* Subtle background */
+        border-radius: 4px;
+      }
+      button.expenses {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 20px;
+      }
+      span {
+        color: black; /* Ensure all span text is black */
+      }
+      .back {
+        height: 50px;
+        width: 50px;
+      }
     </style>
   </head>
   <body>
+    <div class="background">
+    <a href="mfish.html"><img src="Img/1746667598930.png" class="back"></a>
+      <div class="name">
+        <h4 id="class">Class: Loading...</h4>
+        <h4 id="name">User: Loading...</h4>
+      </div>
+      <img class="imp" src="Img/Imp design 2.1-01 (1)-7.png">
+  
+      <div class="feed">
+        <label>Salary:</label>
+        <span id="salary">Loading...</span><br>
+        <label>Stipend:</label>
+        <span id="stipend">Loading...</span><br>
+        <label>Allowance:</label>
+        <span id="allowance">Loading...</span><br>
+        <label>Project Cap:</label>
+        <span id="project">Loading...</span>
+      </div>
+      
+      <button class="expenses" onclick="toggleExpenses()">Show Expenses</button>
+        
+      <div class="expenseArea" id="expenseArea"></div>
+        
+      <div class="fishonly">
+        <h3>FISH only</h3>  
+        <div class="line"></div>
+        <h2>Extra Expenses</h2>
+        <label>Travel allowance:</label>
+        <span id="travel">Loading...</span><br>
+        <label>Food allowance:</label>
+        <span id="food">Loading...</span><br>
+        <label>Extra allowance:</label>
+        <span id="extra">Loading...</span>
+        <h2>Totals</h2>
+        <label>Bill total:</label>
+        <span id="bills">Loading...</span><br>
+        <label>w/extra:</label>
+        <span id="addextra">Loading...</span><br>
+        <label>w/bonus:</label>
+        <span id="addbonus">Loading...</span>
+        <h2>Goal</h2>
+        <label>Daily:</label>
+        <span id="daily">Loading...</span><br>
+      </div>
+    </div>
+
+    <script>
+      // Toggle expenses display
+      function toggleExpenses() {
+        const expenseArea = document.getElementById('expenseArea');
+        const btn = document.querySelector('.expenses');
+        
+        if (expenseArea.style.display === 'none' || !expenseArea.style.display) {
+          showExpenses();
+          expenseArea.style.display = 'block';
+          btn.textContent = 'Hide Expenses';
+        } else {
+          expenseArea.style.display = 'none';
+          btn.textContent = 'Show Expenses';
+        }
+      }
+
+      // Function to show expenses
+      function showExpenses() {
+        try {
+          // Get expenses from localStorage
+          const expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
+          const expenseArea = document.getElementById('expenseArea');
+          
+          // Clear previous content
+          expenseArea.innerHTML = '';
+          
+          // Find expenses for count 0 (Ian Fermy)
+          const userExpenses = expenses.filter(exp => exp.count === 0);
+          
+          if (userExpenses.length === 0) {
+            expenseArea.innerHTML = '<p>No expenses found for this user</p>';
+            return;
+          }
+          
+          // Create header
+          const header = document.createElement('h3');
+          header.textContent = 'Expenses for Ian Fermy';
+          expenseArea.appendChild(header);
+          
+          // Create list of expenses
+          userExpenses.forEach(expense => {
+            const item = document.createElement('div');
+            item.className = 'expense-item';
+            item.innerHTML = `
+              <strong>${expense.billname}</strong><br>
+              Amount: $${expense.billamt}<br>
+              Frequency: ${expense.due}
+            `;
+            expenseArea.appendChild(item);
+          });
+        } catch (error) {
+          console.error('Error showing expenses:', error);
+          document.getElementById('expenseArea').innerHTML = 
+            '<p>Error loading expenses. Check console for details.</p>';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          // Get all data from localStorage
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          const classes = JSON.parse(localStorage.getItem('classes') || '[]');
+          const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+          
+          // Find count 0 entries
+          const user = users.find(u => u.count === 0) || {};
+          const cls = classes.find(c => c.count === 0) || {};
+          const session = sessions.find(s => s.count === 0) || {};
+          
+          // Populate user info
+          document.getElementById('name').textContent = `User: ${user.username || 'Not set'}`;
+          document.getElementById('class').textContent = `Class: ${cls.classname || 'Not set'}`;
+          
+          // Financial fields placeholder
+          document.querySelectorAll('#salary, #stipend, #allowance, #project, #travel, #food, #extra, #bills, #addextra, #addbonus, #daily').forEach(el => {
+            el.textContent = '$0';
+          });
+        } catch (error) {
+          console.error('Error loading data:', error);
+          document.querySelectorAll('span').forEach(el => {
+            el.textContent = 'Error';
+          });
+        }
+      });
+    </script>
   </body>
 </html>

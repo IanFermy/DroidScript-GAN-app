@@ -3,94 +3,136 @@
   <head>
     <style>
       html, body {
-        background-color: white;
         padding: 0;
         margin: 0;
-        overflow: hidden;
         height: 100%;
         width: 100%;
+        overflow-x: hidden; /* Prevent horizontal scroll */
       }
       
-        .background {
-          background-image: url("Img/Screenshot_2025-03-24_114434 (1).jpg");
-          width: 100%;
-          height: 100%;
-          position: relative;
-         }
-         
-         h3 {
-           margin:0;
-          padding: 0;
-         }
-         
-         h4 {
-           margin: 0;
-           padding: 0;
-         }
-         
-         .title {
-           text-align: center;
-           position: relative;
-           top: 5%;
-         }
-         
-         .userBtn {
-           position: relative;
-           top: 50px;
-           left: 43%;
-           border-radius: 20px;
-           background-color: yellow;
-         }
-         
-         .fermyImg {
-           height: 50px; 
-           width: 50px;
-           margin-top: 3px;
-         }
-         
-         .showBusters {
-           position: relative;
-           top: 55px;
-           left: 43%;
-         }
-         
-         .newImg {
-           height: 50px; 
-           width: 50px;
-           margin-top: 6px;
-         }
-         
-         .showBusters{
-           width: 100px;
-           height: 200px;
-           display: none;
-         }
-         
-         a {
-           text-decoration: none;
-         }
-         
-         .back {
-          height: 50px;
-          width: 50px; 
-         }
+      /* Fixed background that stays in place */
+      .background-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("Img/Screenshot_2025-03-24_114434 (1).jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1; /* Places it behind content */
+      }
+      
+      /* Content container that will scroll */
+      .content {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+      }
+      
+      h3 {
+        margin: 0;
+        padding: 0;
+      }
+      
+      h4 {
+        margin: 0;
+        padding: 0;
+      }
+      
+      .title {
+        text-align: center;
+        position: relative;
+        top: 70px;
+        color: black; /* Ensure visibility against background */
+      }
+      
+      .userBtn {
+        position: relative;
+        top: 50px;
+        left: 43%;
+        border-radius: 20px;
+        background-color: yellow;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        z-index: 1;
+      }
+      
+      .fermyImg {
+        height: 50px; 
+        width: 50px;
+        margin-top: 3px;
+      }
+      
+      .showBusters {
+        position: relative;
+        top: 55px;
+        left: 43%;
+        padding: 10px;
+        border-radius: 10px;
+        width: 100px;
+        display: none;
+      }
+      
+      .newImg {
+        height: 50px; 
+        width: 50px;
+        margin-top: 6px;
+      }
+      
+      a {
+        text-decoration: none;
+        color: black; /* Ensure links are visible */
+      }
+      
+      .back {
+        height: 50px;
+        width: 50px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+      }
+      
+      .mainarea {
+        position: relative;
+        top: 50px;
+        z-index: 1;
+        right: 10px;
+      }
+      .powers {
+        height: 40px; 
+        width: 40px;
+        transform: rotate(45deg);
+      }
+      
+      .m {
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body>
-    <div class="background">
+    <!-- Fixed background element -->
+    <div class="background-fixed"></div>
+    
+    <!-- Scrollable content container -->
+    <div class="content">
       <a href="director.html"><img src="Img/1746667598930.png" class="back"></a>
       <h3 class="title">Mfish</h3>
       
       <div class="mainarea">
-       <button onclick="goUsers()" class="userBtn">users</button>
-       <div class="showBusters" id="showBusters">
-         <a href="fermymf.html"><img  class="fermyImg" src="Img/Imp design 2.1-01 (1)-7.png">
-         <h4>Fermy</h4></a>
-         <a href="newuser.html"><img class="newImg" src="Img/1000005475.png">
-         <h4>add new</h4></a>
-       </div>
+        <button onclick="goUsers()" class="userBtn">users</button>
+        <div class="showBusters" id="showBusters">
+          <a href="fermymf.html"><img class="fermyImg" src="Img/Imp design 2.1-01 (1)-7.png">
+          <h4 class="m">Fermy</h4></a>
+          <a href="newuser.html"><img class="newImg" src="Img/1000005475.png"></a>
+          <h4 class="m">add new</h4></a>
+          <a href="powers.html"><img class="powers" src="Img/1747433633213.png"></a>
+          <h4>powers</h4>
+        </div>
       </div>
-    
     </div>
     
     <script>
@@ -99,10 +141,10 @@
         
         if (show.style.display === "none") {
           show.style.display = "block";
-        } else  {
+        } else {
           show.style.display = "none";
         }
-        }
+      }
     </script>
   </body>
 </html>

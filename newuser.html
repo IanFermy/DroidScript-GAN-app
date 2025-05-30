@@ -2,345 +2,406 @@
 <html>
   <head>
     <style>
-     html, body {
-        background-color: white;
+      html, body {
         padding: 0;
         margin: 0;
-        height: auto;
-        min-height: 100%;
-        width: 100%;
-        
+        height: 100%;
+        width: 110%;
+        overflow-x: hidden;
       }
       
-        .background {
-          background-image: url("Img/Screenshot_2025-03-24_114434 (1).jpg");
-          width: 100%;
-          position: relative;
-          background-size: cover;
-          background-repeat: repeat-y;
-          min-height: 100vh;
-          background-position: center;
-         }
-         
-         h3 {
-           margin: 0;
-           padding: 0;
-         }
-         
-         .due {
-           position: relative;
-           top: 140px;
-           left: 120px;
-         }
-         
-         .expenselist {
-           position: relative;
-           top: 115px;
-         }
-         
-         .expensetitle {
-           text-align: center;
-         }
-         
-         .clientname {
-         position: relative;
-         top: 103px;
-         position: relative;
-           left: 18%;
-         }
-         
-         .title {
-           position: relative;
-           top: 70px;
-           text-align: center;
-         }
-         
-         .namebox {
-           position: relative;
-           left: 18%;
-         }
-         
-         .billbox {
-           position: relative;
-           left: 18%;
-         }
-         
-         .text {
-           position: relative;
-           bottom: 25px;
-           font-size: 15px;
-         }
-         
-         .test {
-           position: relative;
-           top: 170px;
-           left: 45%;
-         }
-         
-         .test-area {
-         position: relative;
-           top: 450px;
-           width: 175px;
-           left: 40%;
-         }
-         
-         .clientlist {
-           position: relative;
-           border: none;
-           background: none;
-           top: 160px;
-           right: 15px;
-           color: blue;
-         }
-         
-         .clientimg {
-           height: 105px;
-           width: 105px;
-           position: absolute;
-           transform: rotate(90deg);
-           
-         }
-         
-         .clients {
-           position: relative;
-           top: 200px;
-           display: none;
-         }
-         
-         .clientOneBtn {
-           background: none;
-           border: none;
-           position: relative;
-           left: 50px;
-           top: 10px;
-         }
-         
-         .clientOne {
-           height: 80px;
-           width: 80px;
-           
-           transform: rotate(90deg);
-         }  
-         
-         .free {
-           position: relative;
-           top: 100px;
-           left: 150px;
-           display: none;
-         }
-         
-         .session {
-           position: relative;
-           top: 85px;
-           left: 100px;
-         }
-         
-         .class {
-           position: relative;
-           top: 120px;
-           left: 100px;
-         }
-         
-         .back {
-           height: 50px;
-           width: 50px;
-         }
+      /* Fixed background */
+      .background-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("Img/Screenshot_2025-03-24_114434 (1).jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1;
+      }
+      
+      /* Main content container */
+      .content {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        padding-bottom: 200px; /* Extra space for bottom elements */
+      }
+      
+      /* Header styles */
+      h3, h4 {
+        margin: 0;
+        padding: 0;
+      }
+      
+      .title {
+        position: relative;
+        top: 70px;
+        text-align: center;
+      }
+      
+      /* Form sections */
+      .session {
+        position: relative;
+        top: 85px;
+        left: 100px;
+        margin-bottom: 20px;
+      }
+      
+      .clientname {
+        position: relative;
+        top: 100px;
+        left: 18%;
+        margin-bottom: 20px;
+      }
+      
+      .class {
+        position: relative;
+        top: 120px;
+        left: 100px;
+        margin-bottom: 20px;
+      }
+      
+      .expenselist {
+        position: relative;
+        top: 140px;
+        margin-bottom: 40px;
+      }
+      
+      .expensetitle {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      
+      .namebox, .billbox {
+        position: relative;
+        left: 18%;
+        margin-bottom: 15px;
+      }
+      
+      .due {
+        position: relative;
+        top: 160px;
+        left: 120px;
+        margin-bottom: 30px;
+      }
+      
+      .text {
+        position: relative;
+        bottom: 25px;
+        font-size: 15px;
+      }
+      
+      /* Buttons */
+      .test {
+        position: relative;
+        top: 180px;
+        left: 45%;
+        margin-bottom: 100px;
+        padding: 10px 20px;
+      }
+      
+      /* Client list elements */
+      .clientlist {
+        position: absolute;
+        bottom: 50px;
+        right: 240px;
+        border: none;
+        background: none;
+        z-index: 10;
+      }
+      
+      .clientimg {
+        height: 105px;
+        width: 105px;
+        transform: rotate(90deg);
+      }
+      
+      .clients {
+        position: fixed;
+        bottom: 140px;
+        right: 220px;
+        display: none;
+        
+        padding: 15px;
+        border-radius: 10px;
+        z-index: 10;
+      }
+      
+      .clientOneBtn {
+        background: none;
+        border: none;
+        padding: 0;
+      }
+      
+      .clientOne {
+        height: 80px;
+        width: 80px;
+        transform: rotate(90deg);
+      }
+      
+      .free {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+        max-width: 80%;
+        max-height: 80vh;
+        overflow-y: auto;
+        z-index: 20;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      }
+      
+      /* Back button */
+      .back {
+        height: 50px;
+        width: 50px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+      }
+      
+      /* Form elements */
+      input {
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      button {
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: none;
+        
+        color: black;
+      }
+      
+      label {
+        display: inline-block;
+        width: 100px;
+        margin-right: 10px;
+      }
+      
+      input[type="radio"] {
+        margin-right: 5px;
+      }
     </style>
   </head>
   <body>
-  <div class="background">
-   
-   <a href="mfish.html"><img src="Img/1746667598930.png" class="back"></a>
-    <h3 class="title">New User</h3>
-    <input placeholder="session" id="session" class="session">
-    <div class="clientname">
-    <label for="userName">Client Name</label>
-    <input id="username">
-    </div>
+    <!-- Fixed background element -->
+    <div class="background-fixed"></div>
     
-    <div class="class">
-      <input id="class" placeholder="class">
-    </div>
-    
-    <div class="expenselist">
-      <h4 class="expensetitle">build expenses list</h4>
-      <div class="namebox">
-      <label for="billname">Bill Name</label>
-      <input id="billname">
-      </div><br>
-      <div class="billbox">
-      <label for="billamt">Bill Amount</label>
-      <input id="billamt">
-      </div>
-    </div>
-    
-    <div class="due">
-      <label>Daily</label>
-      <input type="radio" value="daily" name="duetime" id="daily">
-    
-      <label>Weekly</label>
-      <input type="radio" value="weekly" name="duetime" id="weekly">
-      <br><br>
-      <label>Monthly</label>
-      <input type="radio" value="monthly" name="duetime" id="monthly">
-    
-      <label>Yearly</label>
-       <input type="radio"  value="yearly" name="duetime" id="yearly">
+    <!-- Scrollable content container -->
+    <div class="content">
+      <a href="mfish.html"><img src="Img/1746667598930.png" class="back"></a>
+      <h3 class="title">New User</h3>
       
-      <span class="text">DUE</span>
+      <input placeholder="session" id="session" class="session">
+      
+      <div class="clientname">
+        <label for="username">Client Name</label>
+        <input id="username">
+      </div>
+      
+      <div class="class">
+        <input id="class" placeholder="class">
+      </div>
+      
+      <div class="expenselist">
+        <h4 class="expensetitle">build expenses list</h4>
+        <div class="namebox">
+          <label for="billname">Bill Name</label>
+          <input id="billname">
+        </div>
+        <div class="billbox">
+          <label for="billamt">Bill Amount</label>
+          <input id="billamt">
+        </div>
+      </div>
+      
+      <div class="due">
+        <label>Daily</label>
+        <input type="radio" value="daily" name="duetime" id="daily">
+        <label>Weekly</label>
+        <input type="radio" value="weekly" name="duetime" id="weekly">
+        <br><br>
+        <label>Monthly</label>
+        <input type="radio" value="monthly" name="duetime" id="monthly">
+        <label>Yearly</label>
+        <input type="radio" value="yearly" name="duetime" id="yearly">
+        <span class="text">DUE</span>
+      </div>
+      
+      <button id="test" class="test" onclick="submit()">send</button>
+      
+      <!-- Client list elements -->
+      <button class="clientlist" onclick="showClients()">
+        <img class="clientimg" src="Img/1747177918807.png">
+      </button>
+      
+      <div class="clients" id="clients">
+        <button class="clientOneBtn" onclick="clientOne()">
+          <img class="clientOne" src="Img/1747182085181.png">
+        </button>
+      </div>
+      
+      <div class="free" id="free"></div>
     </div>
-    <button id="test" class="test" onclick="submit()">send</button>
-    <button class="clientlist" onclick="showClients()"><img class="clientimg" src="Img/1747177918807.png"></button>
-   
-   <div class="clients" id="clients">
-     <button class="clientOneBtn" onclick="clientOne()"><img class="clientOne" src="Img/1747182085181.png"></button>
-   </div>
-   
-   <div class="free" id="free"></div>
-  </div>
 
-  <script>
-const usernameInput = document.getElementById("username");
-const billnameInput = document.getElementById("billname");
-const billamtInput = document.getElementById("billamt");
-const sessionInput = document.getElementById("session");
-const classInput = document.getElementById("class");
 
-// Main submit: save user, session, expenses, and class under shared count
-function submit() {
-  const usernameValue = usernameInput.value.trim();
-  const sessionValue = sessionInput.value.trim();
-  const billnameValue = billnameInput.value.trim();
-  const billamtValue = billamtInput.value.trim();
-  const classValue = classInput.value.trim();
-  const dueRadio = document.querySelector("input[name='duetime']:checked");
-  const dueValue = dueRadio ? dueRadio.value : "";
+    <script>
+       const usernameInput = document.getElementById("username");
+      const billnameInput = document.getElementById("billname");
+      const billamtInput = document.getElementById("billamt");
+      const sessionInput = document.getElementById("session");
+      const classInput = document.getElementById("class");
 
-  if (!usernameValue || !billnameValue || !billamtValue || !dueValue || !sessionValue || !classValue) {
-    alert("Please fill out all fields.");
-    return;
-  }
+      // Main submit: save user, session, expenses, and class under shared count
+      function submit() {
+        const usernameValue = usernameInput.value.trim();
+        const sessionValue = sessionInput.value.trim();
+        const billnameValue = billnameInput.value.trim();
+        const billamtValue = billamtInput.value.trim();
+        const classValue = classInput.value.trim();
+        const dueRadio = document.querySelector("input[name='duetime']:checked");
+        const dueValue = dueRadio ? dueRadio.value : "";
 
-  // Get count
-  let count = parseInt(localStorage.getItem("count") || "0");
+        if (!usernameValue || !billnameValue || !billamtValue || !dueValue || !sessionValue || !classValue) {
+          alert("Please fill out all fields.");
+          return;
+        }
 
-  // Save user
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  if (!users.some(u => u.count === count)) {
-    users.push({ count, username: usernameValue });
-    localStorage.setItem("users", JSON.stringify(users));
-  }
+        // Get count
+        let count = parseInt(localStorage.getItem("count") || "0");
 
-  // Save session
-  const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
-  if (!sessions.some(s => s.count === count)) {
-    sessions.push({ count, session: sessionValue });
-    localStorage.setItem("sessions", JSON.stringify(sessions));
-  }
+        // Save user
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        if (!users.some(u => u.count === count)) {
+          users.push({ count, username: usernameValue });
+          localStorage.setItem("users", JSON.stringify(users));
+        }
 
-  // Save class
-  const classes = JSON.parse(localStorage.getItem("classes")) || [];
-  if (!classes.some(c => c.count === count)) {
-    classes.push({ count, classname: classValue });
-    localStorage.setItem("classes", JSON.stringify(classes));
-  }
+        // Save session
+        const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+        if (!sessions.some(s => s.count === count)) {
+          sessions.push({ count, session: sessionValue });
+          localStorage.setItem("sessions", JSON.stringify(sessions));
+        }
 
-  // Save expense
-  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-  expenses.push({ count, billname: billnameValue, billamt: billamtValue, due: dueValue });
-  localStorage.setItem("expenses", JSON.stringify(expenses));
+        // Save class
+        const classes = JSON.parse(localStorage.getItem("classes")) || [];
+        if (!classes.some(c => c.count === count)) {
+          classes.push({ count, classname: classValue });
+          localStorage.setItem("classes", JSON.stringify(classes));
+        }
 
-  // Prepare for next count
-  localStorage.setItem("count", count + 1);
+        // Save expense
+        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+        expenses.push({ count, billname: billnameValue, billamt: billamtValue, due: dueValue });
+        localStorage.setItem("expenses", JSON.stringify(expenses));
 
-  // Reset inputs
-  usernameInput.value = "";
-  sessionInput.value = "";
-  billnameInput.value = "";
-  billamtInput.value = "";
-  classInput.value = "";
-  document.querySelectorAll("input[name='duetime']").forEach(r => r.checked = false);
+        // Prepare for next count
+        localStorage.setItem("count", count + 1);
 
-  alert("Data saved.");
-}
+        // Reset inputs
+        usernameInput.value = "";
+        sessionInput.value = "";
+        billnameInput.value = "";
+        billamtInput.value = "";
+        classInput.value = "";
+        document.querySelectorAll("input[name='duetime']").forEach(r => r.checked = false);
 
-// Show all sessions so user can pick
-function sessionsMenu() {
-  const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
-  const free = document.getElementById("free");
+        alert("Data saved.");
+      }
 
-  if (sessions.length === 0) {
-    free.innerHTML = "<p>No sessions saved.</p>";
-    return;
-  }
+      // Show all sessions so user can pick
+      function sessionsMenu() {
+        const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+        const free = document.getElementById("free");
 
-  let html = "<h4>Select a session</h4>";
-  sessions.forEach(s => {
-    html += `<button onclick="showSession(${s.count})">${s.session}</button><br>`;
-  });
-  free.innerHTML = html;
-}
+        if (sessions.length === 0) {
+          free.innerHTML = "<p>No sessions saved.</p>";
+          return;
+        }
 
-// Show user + session + expenses + class for a given count
-function showSession(count) {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
-  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-  const classes = JSON.parse(localStorage.getItem("classes")) || [];
+        let html = "<h4>Select a session</h4>";
+        sessions.forEach(s => {
+          html += `<button onclick="showSession(${s.count})">${s.session}</button><br>`;
+        });
+        free.innerHTML = html;
+      }
 
-  const free = document.getElementById("free");
+      // Show user + session + expenses + class for a given count
+      function showSession(count) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+        const classes = JSON.parse(localStorage.getItem("classes")) || [];
 
-  const user = users.find(u => u.count === count);
-  const session = sessions.find(s => s.count === count);
-  const cls = classes.find(c => c.count === count);
-  const sessionExpenses = expenses.filter(e => e.count === count);
+        const free = document.getElementById("free");
 
-  if (!user || !session) {
-    free.innerHTML = "<p>Session data missing.</p>";
-    return;
-  }
+        const user = users.find(u => u.count === count);
+        const session = sessions.find(s => s.count === count);
+        const cls = classes.find(c => c.count === count);
+        const sessionExpenses = expenses.filter(e => e.count === count);
 
-  let html = `<h4>Session: ${session.session}</h4>`;
-  html += `<p>User: ${user.username}</p>`;
-  if (cls) html += `<p>Class: ${cls.classname}</p>`;
+        if (!user || !session) {
+          free.innerHTML = "<p>Session data missing.</p>";
+          return;
+        }
 
-  if (sessionExpenses.length === 0) {
-    html += "<p>No expenses for this session.</p>";
-  } else {
-    html += "<ul>";
-    sessionExpenses.forEach((e, i) => {
-      html += `<li><strong>Item ${i + 1}</strong>: ${e.billname} - $${e.billamt} (${e.due})</li>`;
-    });
-    html += "</ul>";
-  }
+        let html = `<h4>Session: ${session.session}</h4>`;
+        html += `<p>User: ${user.username}</p>`;
+        if (cls) html += `<p>Class: ${cls.classname}</p>`;
 
-  free.innerHTML = html;
-}
+        if (sessionExpenses.length === 0) {
+          html += "<p>No expenses for this session.</p>";
+        } else {
+          html += "<ul>";
+          sessionExpenses.forEach((e, i) => {
+            html += `<li><strong>Item ${i + 1}</strong>: ${e.billname} - $${e.billamt} (${e.due})</li>`;
+          });
+          html += "</ul>";
+        }
 
-// Show client list
-function showClients() {
-  const clients = document.getElementById("clients");
-  const currentDisplay = window.getComputedStyle(clients).display;
+        free.innerHTML = html;
+      }
 
-  if (currentDisplay === "none") {
-    clients.style.display = "block";
-  } else {
-    clients.style.display = "none";
-  }
-}
+      // Show client list
+      function showClients() {
+        const clients = document.getElementById("clients");
+        const currentDisplay = window.getComputedStyle(clients).display;
 
-// When clientOne image is clicked
-function clientOne() {
-  sessionsMenu();
-  const showData = document.getElementById("free");
-  const currentDisplay = window.getComputedStyle(showData).display;
+        if (currentDisplay === "none") {
+          clients.style.display = "block";
+        } else {
+          clients.style.display = "none";
+        }
+      }
 
-  if (currentDisplay === "none") {
-    showData.style.display = "block";
-  } else {
-    showData.style.display = "none";
-  }
-}
-</script>
+      // When clientOne image is clicked
+      function clientOne() {
+        sessionsMenu();
+        const showData = document.getElementById("free");
+        const currentDisplay = window.getComputedStyle(showData).display;
+
+        if (currentDisplay === "none") {
+          showData.style.display = "block";
+        } else {
+          showData.style.display = "none";
+        }
+      }
+    </script>
   </body>
 </html>

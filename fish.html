@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* [Previous CSS remains exactly the same] */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .background {
+        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+      }
+
+      .imp {
+        border: 2px solid black;
+        position: relative;
+        height: 80px;
+        width: 80px;
+        bottom: 20px;
+        left: 100px;
+      }
+
+      .backlog {
+        position: relative;
+        top: 90px;
+        left: 50px;
+      }
+
+      .sessionBtn {
+        position: relative;
+        right: 30px;
+        top: 120px;
+      }
+
+      .title {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        top: 70px;
+      }
+
+      .display {
+        display: none; /* Hidden by default */
+        border: 2px solid black;
+        position: relative;
+        top: 180px;
+        left: 25px;
+        width: 300px;
+        height: 350px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        overflow-y: auto;
+      }
+
+      .classUnit {
+        text-align: center;
+      }
+
+      .user {
+        text-align: center;
+        position: relative;
+        bottom: 15px;
+      }
+
+      .session, .sessionValue {
+        display: block;
+        text-align: center;
+        margin: 5px 0;
+      }
+
+      .expenses, .income, .powers {
+        display: block;
+        position: relative;
+        left: 15px;
+        top: 15px;
+        margin-bottom: 5px;
+        border: 2px solid black;
+        padding: 2px;
+        background: black;
+        color: yellow;
+        border-radius: 10px;
+        width: 150px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .income, .powers {
+        text-decoration: none;
+      }
+
+      .expense-item {
+        margin: 10px 0;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+
+      .expense-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .expense-detail {
+        display: flex;
+        justify-content: space-between;
+        margin: 3px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <h3 class="title">FISH</h3>
+      <button class="backlog">backlog</button>
+      <button class="sessionBtn" onclick="viewSession()">view session</button>
+
+      <div class="display" id="display"></div>
+    </div>
+
+    <script>
+      // Initialize localStorage with sample data if empty
+      function initializeLocalStorage() {
+        if (!localStorage.getItem("expenses")) {
+          localStorage.setItem("expenses", JSON.stringify({
+            "count": 1,
+            "billname": "Test Bill",
+            "billamt": "100.00",
+            "due": "monthly"
+          }));
+        }
+        
+        if (!localStorage.getItem("classes")) {
+          localStorage.setItem("classes", JSON.stringify([{
+            "classname": "Test Class"
+          }]));
+        }
+        
+        if (!localStorage.getItem("users")) {
+          localStorage.setItem("users", JSON.stringify([{
+            "username": "Test User",
+            "count": 1
+          }]));
+        }
+        
+        if (!localStorage.getItem("sessions")) {
+          localStorage.setItem("sessions", JSON.stringify([{
+            "session": "Test Session"
+          }]));
+        }
+      }
+
+      // Call initialization when page loads
+      window.onload = initializeLocalStorage;
+
+      function viewSession() {
+        var display = document.getElementById("display");
+        display.style.display = "block";
+        display.innerHTML = '';
+
+        var classData = JSON.parse(localStorage.getItem("classes") || '[{"classname":"No Class"}]');
+        var usersData = JSON.parse(localStorage.getItem("users") || '[{"username":"No User"}]');
+        var sessionData = JSON.parse(localStorage.getItem("sessions") || '[{"session":"No Session"}]');
+
+        var classUnit = document.createElement("h3");
+        classUnit.innerText = classData[0]?.classname || "Default Class";
+        classUnit.className = 'classUnit';
+        display.appendChild(classUnit);
+
+        var user = document.createElement("h4");
+        user.innerText = usersData[0]?.username || "Default User";
+        user.className = "user";
+        display.appendChild(user);
+
+        var imp = document.createElement("img");
+        imp.className = "imp";
+        display.appendChild(imp);
+
+        var session = document.createElement("span");
+        session.innerText = "session:";
+        session.className = "session";
+        display.appendChild(session);
+
+        var sessionValue = document.createElement("span");
+        sessionValue.innerText = sessionData[0]?.session || "Default Session";
+        sessionValue.className = "sessionValue";
+        display.appendChild(sessionValue);
+
+        var expenses = document.createElement("button");
+        expenses.innerText = "session expenses";
+        expenses.onclick = showExpenses;
+        expenses.className = "expenses";
+        display.appendChild(expenses);
+
+        var income = document.createElement("a");
+        income.innerText = "daily income";
+        income.href = "income.html";
+        income.className = "income";
+        display.appendChild(income);
+
+        var powers = document.createElement("a");
+        powers.innerText = "powers";
+        powers.className = "powers";
+        powers.href= "busterpowers.html";
+        display.appendChild(powers);
+      }
+
+      function showExpenses() {
+  var display = document.getElementById("display");
+
+  // Get expenses from localStorage and parse as array
+  var expensesData = JSON.parse(localStorage.getItem("expenses") || '[]');
+
+  // Check if there are no expenses
+  if (!Array.isArray(expensesData) || expensesData.length === 0) {
+    display.innerHTML = "<p>No expenses found</p>";
+    return;
+  }
+
+  // Clear the display container
+  display.innerHTML = "<h3>Expenses:</h3>";
+
+  // Loop through each expense and display it
+  expensesData.forEach(function(item) {
+    var name = item.billname || "No Name";
+    var amount = item.billamt || "No Amount";
+    var due = item.due || "No Due Date";
+
+    // Create a div for each expense
+    var expenseCard = document.createElement("div");
+    expenseCard.className = "expense-card";
+    expenseCard.style.border = "1px solid #ccc";
+    expenseCard.style.padding = "10px";
+    expenseCard.style.margin = "10px 0";
+    expenseCard.style.borderRadius = "8px";
+    expenseCard.style.backgroundColor = "#f9f9f9";
+
+    expenseCard.innerHTML = `
+      <p><strong>${name}</strong></p>
+      <p>Amount: ${amount}</p>
+      <p>Due: ${due}</p>
+    `;
+
+    // Append the card to the display container
+    display.appendChild(expenseCard);
+  });
+}
+    </script>
+  </body>
+</html>
