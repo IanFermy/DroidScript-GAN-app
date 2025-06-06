@@ -10,7 +10,6 @@
         overflow-x: hidden;
       }
       
-      /* Fixed background */
       .background-fixed {
         position: fixed;
         top: 0;
@@ -24,15 +23,13 @@
         z-index: -1;
       }
       
-      /* Main content container */
       .content {
         position: relative;
         width: 100%;
         min-height: 100vh;
-        padding-bottom: 200px; /* Extra space for bottom elements */
+        padding-bottom: 200px;
       }
       
-      /* Header styles */
       h3, h4 {
         margin: 0;
         padding: 0;
@@ -44,7 +41,6 @@
         text-align: center;
       }
       
-      /* Form sections */
       .session {
         position: relative;
         top: 85px;
@@ -96,7 +92,6 @@
         font-size: 15px;
       }
       
-      /* Buttons */
       .test {
         position: relative;
         top: 180px;
@@ -105,7 +100,6 @@
         padding: 10px 20px;
       }
       
-      /* Client list elements */
       .clientlist {
         position: absolute;
         bottom: 50px;
@@ -126,7 +120,6 @@
         bottom: 140px;
         right: 220px;
         display: none;
-        
         padding: 15px;
         border-radius: 10px;
         z-index: 10;
@@ -160,7 +153,6 @@
         box-shadow: 0 0 20px rgba(0,0,0,0.2);
       }
       
-      /* Back button */
       .back {
         height: 50px;
         width: 50px;
@@ -170,7 +162,6 @@
         z-index: 10;
       }
       
-      /* Form elements */
       input {
         padding: 8px;
         margin: 5px 0;
@@ -183,7 +174,6 @@
         padding: 8px 16px;
         border-radius: 4px;
         border: none;
-        
         color: black;
       }
       
@@ -199,10 +189,8 @@
     </style>
   </head>
   <body>
-    <!-- Fixed background element -->
     <div class="background-fixed"></div>
     
-    <!-- Scrollable content container -->
     <div class="content">
       <a href="mfish.html"><img src="Img/1746667598930.png" class="back"></a>
       <h3 class="title">New User</h3>
@@ -243,15 +231,14 @@
         <span class="text">DUE</span>
       </div>
       
-      <button id="test" class="test" onclick="submit()">send</button>
+      <button id="test" class="test" onclick="saveData()">send</button>
       
-      <!-- Client list elements -->
-      <button class="clientlist" onclick="showClients()">
+      <button class="clientlist" onclick="toggleClients()">
         <img class="clientimg" src="Img/1747177918807.png">
       </button>
       
       <div class="clients" id="clients">
-        <button class="clientOneBtn" onclick="clientOne()">
+        <button class="clientOneBtn" onclick="showSessionMenu()">
           <img class="clientOne" src="Img/1747182085181.png">
         </button>
       </div>
@@ -259,149 +246,211 @@
       <div class="free" id="free"></div>
     </div>
 
+    
+<script>
+  // Initialize localStorage if empty
+  function initializeStorage() {
+    if (!localStorage.getItem('users')) {
+      localStorage.setItem('users', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('sessions')) {
+      localStorage.setItem('sessions', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('classes')) {
+      localStorage.setItem('classes', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('expenses')) {
+      localStorage.setItem('expenses', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('count')) {
+      localStorage.setItem('count', '0');
+    }
+    if (!localStorage.getItem('lastEntry')) {
+      localStorage.setItem('lastEntry', JSON.stringify({
+        username: '',
+        session: '',
+        classname: '',
+        count: null
+      }));
+    }
+  }
 
-    <script>
-       const usernameInput = document.getElementById("username");
-      const billnameInput = document.getElementById("billname");
-      const billamtInput = document.getElementById("billamt");
-      const sessionInput = document.getElementById("session");
-      const classInput = document.getElementById("class");
+  // Load last entered values
+  function loadLastEntry() {
+    const lastEntry = JSON.parse(localStorage.getItem('lastEntry'));
+    document.getElementById('username').value = lastEntry.username || '';
+    document.getElementById('session').value = lastEntry.session || '';
+    document.getElementById('class').value = lastEntry.classname || '';
+  }
 
-      // Main submit: save user, session, expenses, and class under shared count
-      function submit() {
-        const usernameValue = usernameInput.value.trim();
-        const sessionValue = sessionInput.value.trim();
-        const billnameValue = billnameInput.value.trim();
-        const billamtValue = billamtInput.value.trim();
-        const classValue = classInput.value.trim();
-        const dueRadio = document.querySelector("input[name='duetime']:checked");
-        const dueValue = dueRadio ? dueRadio.value : "";
+  // Main function to save data
+ function saveData() {
+  initializeStorage();
+  
+  // Get form values
+  const username = document.getElementById('username').value.trim();
+  const session = document.getElementById('session').value.trim();
+  const className = document.getElementById('class').value.trim();
+  const billName = document.getElementById('billname').value.trim();
+  const billAmount = document.getElementById('billamt').value.trim();
+  const due = document.querySelector('input[name="duetime"]:checked')?.value;
+  
+  // Validate inputs
+  if (!username || !session || !className || !billName || !billAmount || !due) {
+    alert('Please fill all fields');
+    return;
+  }
+  
+  // Get or create count
+  let count;
+  const lastEntry = JSON.parse(localStorage.getItem('lastEntry'));
+  const users = JSON.parse(localStorage.getItem('users'));
+  
+  // Check if this matches last entry
+  const isSameEntry = (username === lastEntry.username && 
+                      session === lastEntry.session && 
+                      className === lastEntry.classname);
+  
+  if (isSameEntry && lastEntry.count !== null) {
+    // Use existing count from last entry
+    count = lastEntry.count;
+  } else {
+    // Check if user exists
+    const existingUser = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+    
+    if (existingUser) {
+      count = existingUser.count;
+    } else {
+      // Get new count for new user
+      count = parseInt(localStorage.getItem('count'));
+      localStorage.setItem('count', (count + 1).toString());
+      
+      // Save new user
+      users.push({ count, username });
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+    
+    // Save/update session data
+    const sessions = JSON.parse(localStorage.getItem('sessions'));
+    const sessionIndex = sessions.findIndex(s => s.count === count);
+    if (sessionIndex >= 0) {
+      sessions[sessionIndex].session = session;
+    } else {
+      sessions.push({ count, session });
+    }
+    localStorage.setItem('sessions', JSON.stringify(sessions));
+    
+    // Save/update class data
+    const classes = JSON.parse(localStorage.getItem('classes'));
+    const classIndex = classes.findIndex(c => c.count === count);
+    if (classIndex >= 0) {
+      classes[classIndex].classname = className;
+    } else {
+      classes.push({ count, classname: className });
+    }
+    localStorage.setItem('classes', JSON.stringify(classes));
+  }
+  
+  // Save expense data - ENSURE COUNT IS ALWAYS INCLUDED
+  let expenses = JSON.parse(localStorage.getItem('expenses'));
+  const newExpense = {
+    count, // This is the critical line - always include count
+    billname: billName,
+    billamt: billAmount,
+    due
+  };
+  
+  // Validate the expense object before saving
+  if (!newExpense.count && newExpense.count !== 0) {
+    console.error('Attempting to save expense without count!', newExpense);
+    alert('Error: Missing user identification. Please try again.');
+    return;
+  }
+  
+  expenses.push(newExpense);
+  localStorage.setItem('expenses', JSON.stringify(expenses));
+  
+  // Update lastEntry with current data
+  localStorage.setItem('lastEntry', JSON.stringify({
+    username,
+    session,
+    classname: className,
+    count // Make sure count is included here too
+  }));
+  
+  // Clear only expense fields
+  document.getElementById('billname').value = '';
+  document.getElementById('billamt').value = '';
+  document.querySelectorAll('input[name="duetime"]').forEach(el => el.checked = false);
+  
+  alert('Expense saved successfully!');
+}
 
-        if (!usernameValue || !billnameValue || !billamtValue || !dueValue || !sessionValue || !classValue) {
-          alert("Please fill out all fields.");
-          return;
-        }
+  // Show session selection menu
+  function showSessionMenu() {
+    initializeStorage();
+    const sessions = JSON.parse(localStorage.getItem('sessions'));
+    const freeDiv = document.getElementById('free');
+    
+    if (!sessions.length) {
+      freeDiv.innerHTML = '<p>No sessions available</p>';
+      freeDiv.style.display = 'block';
+      return;
+    }
+    
+    let html = '<h4>Select Session</h4>';
+    sessions.forEach(session => {
+      html += `<button onclick="displaySession(${session.count})">${session.session}</button><br>`;
+    });
+    freeDiv.innerHTML = html;
+    freeDiv.style.display = 'block';
+  }
 
-        // Get count
-        let count = parseInt(localStorage.getItem("count") || "0");
+  // Display session details
+  function displaySession(count) {
+    initializeStorage();
+    
+    const users = JSON.parse(localStorage.getItem('users'));
+    const sessions = JSON.parse(localStorage.getItem('sessions'));
+    const classes = JSON.parse(localStorage.getItem('classes'));
+    const expenses = JSON.parse(localStorage.getItem('expenses'));
+    const freeDiv = document.getElementById('free');
+    
+    const user = users.find(u => u.count === count);
+    const session = sessions.find(s => s.count === count);
+    const classInfo = classes.find(c => c.count === count);
+    const sessionExpenses = expenses.filter(e => e.count === count);
+    
+    let html = `<h3>Session Details</h3>
+               <p><strong>User:</strong> ${user?.username || 'N/A'}</p>
+               <p><strong>Session:</strong> ${session?.session || 'N/A'}</p>
+               <p><strong>Class:</strong> ${classInfo?.classname || 'N/A'}</p>
+               <h4>Expenses:</h4>`;
+    
+    if (sessionExpenses.length) {
+      html += '<ul>';
+      sessionExpenses.forEach(expense => {
+        html += `<li>${expense.billname}: $${expense.billamt} (${expense.due})</li>`;
+      });
+      html += '</ul>';
+    } else {
+      html += '<p>No expenses found</p>';
+    }
+    
+    freeDiv.innerHTML = html;
+    freeDiv.style.display = 'block';
+  }
 
-        // Save user
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        if (!users.some(u => u.count === count)) {
-          users.push({ count, username: usernameValue });
-          localStorage.setItem("users", JSON.stringify(users));
-        }
+  // Toggle clients panel
+  function toggleClients() {
+    const clientsDiv = document.getElementById('clients');
+    clientsDiv.style.display = clientsDiv.style.display === 'none' ? 'block' : 'none';
+  }
 
-        // Save session
-        const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
-        if (!sessions.some(s => s.count === count)) {
-          sessions.push({ count, session: sessionValue });
-          localStorage.setItem("sessions", JSON.stringify(sessions));
-        }
-
-        // Save class
-        const classes = JSON.parse(localStorage.getItem("classes")) || [];
-        if (!classes.some(c => c.count === count)) {
-          classes.push({ count, classname: classValue });
-          localStorage.setItem("classes", JSON.stringify(classes));
-        }
-
-        // Save expense
-        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        expenses.push({ count, billname: billnameValue, billamt: billamtValue, due: dueValue });
-        localStorage.setItem("expenses", JSON.stringify(expenses));
-
-        // Prepare for next count
-        localStorage.setItem("count", count + 1);
-
-        // Reset inputs
-        usernameInput.value = "";
-        sessionInput.value = "";
-        billnameInput.value = "";
-        billamtInput.value = "";
-        classInput.value = "";
-        document.querySelectorAll("input[name='duetime']").forEach(r => r.checked = false);
-
-        alert("Data saved.");
-      }
-
-      // Show all sessions so user can pick
-      function sessionsMenu() {
-        const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
-        const free = document.getElementById("free");
-
-        if (sessions.length === 0) {
-          free.innerHTML = "<p>No sessions saved.</p>";
-          return;
-        }
-
-        let html = "<h4>Select a session</h4>";
-        sessions.forEach(s => {
-          html += `<button onclick="showSession(${s.count})">${s.session}</button><br>`;
-        });
-        free.innerHTML = html;
-      }
-
-      // Show user + session + expenses + class for a given count
-      function showSession(count) {
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const sessions = JSON.parse(localStorage.getItem("sessions")) || [];
-        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        const classes = JSON.parse(localStorage.getItem("classes")) || [];
-
-        const free = document.getElementById("free");
-
-        const user = users.find(u => u.count === count);
-        const session = sessions.find(s => s.count === count);
-        const cls = classes.find(c => c.count === count);
-        const sessionExpenses = expenses.filter(e => e.count === count);
-
-        if (!user || !session) {
-          free.innerHTML = "<p>Session data missing.</p>";
-          return;
-        }
-
-        let html = `<h4>Session: ${session.session}</h4>`;
-        html += `<p>User: ${user.username}</p>`;
-        if (cls) html += `<p>Class: ${cls.classname}</p>`;
-
-        if (sessionExpenses.length === 0) {
-          html += "<p>No expenses for this session.</p>";
-        } else {
-          html += "<ul>";
-          sessionExpenses.forEach((e, i) => {
-            html += `<li><strong>Item ${i + 1}</strong>: ${e.billname} - $${e.billamt} (${e.due})</li>`;
-          });
-          html += "</ul>";
-        }
-
-        free.innerHTML = html;
-      }
-
-      // Show client list
-      function showClients() {
-        const clients = document.getElementById("clients");
-        const currentDisplay = window.getComputedStyle(clients).display;
-
-        if (currentDisplay === "none") {
-          clients.style.display = "block";
-        } else {
-          clients.style.display = "none";
-        }
-      }
-
-      // When clientOne image is clicked
-      function clientOne() {
-        sessionsMenu();
-        const showData = document.getElementById("free");
-        const currentDisplay = window.getComputedStyle(showData).display;
-
-        if (currentDisplay === "none") {
-          showData.style.display = "block";
-        } else {
-          showData.style.display = "none";
-        }
-      }
-    </script>
+  // Initialize on page load and load last entry
+  initializeStorage();
+  loadLastEntry();
+</script>
   </body>
+
 </html>

@@ -1,224 +1,472 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        color: black; /* Changed to black text */
-      }
-      .background {
-        min-height: 100vh;
-        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
-        background-size: cover;
-        background-attachment: fixed;
-        padding: 20px;
-        box-sizing: border-box;
-        position: relative;
-      }
-      .name {
-        position: absolute;
-        top: 50px;
-        left: 180px;
-        color: black; /* Ensure text is black */
-      }
-      .imp {
-        height: 90px;
-        width: 90px;
-        position: absolute;
-        left: 250px;
-        top: 110px;
-      }
-      h4, h3 {
-        margin: 0;
-        padding: 0;
-        color: black; /* Ensure headings are black */
-      }
-      .feed {
-        margin-top: 100px;
-        margin-left: 20px;
-      }
-      .fishonly {
-        margin-top: 50px;
-        padding: 20px;
-        background-color: rgba(255,255,255,0.7); /* Lighter background for readability */
-        border-radius: 10px;
-        color: black;
-      }
-      label {
-        display: inline-block;
-        width: 150px;
-        color: black;
-      }
-      .line {
-        height: 2px;
-        background: black; /* Changed to black */
-        margin: 10px 0;
-      }
-      .expenseArea {
-        margin: 20px;
-        padding: 15px;
-        background-color: rgba(255,255,255,0.7); /* Lighter background */
-        border-radius: 8px;
-        color: black;
-        display: none; /* Hidden by default */
-      }
-      .expense-item {
-        margin-bottom: 8px;
-        padding: 8px;
-        background-color: rgba(0,0,0,0.1); /* Subtle background */
-        border-radius: 4px;
-      }
-      button.expenses {
-        background: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 20px;
-      }
-      span {
-        color: black; /* Ensure all span text is black */
-      }
-      .back {
-        height: 50px;
-        width: 50px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="background">
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: black;
+    }
+    .background {
+      min-height: 100vh;
+      background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .name { position: absolute; top: 50px; left: 180px; color: black; }
+    .imp { height: 90px; width: 90px; position: absolute; left: 250px; top: 110px; }
+    h4, h3 { margin: 0; padding: 0; color: black; }
+    .feed { margin-top: 100px; margin-left: 20px; }
+    .fishonly {
+      margin-top: 50px; padding: 20px;
+      background-color: rgba(255,255,255,0.7);
+      border-radius: 10px; color: black;
+      position: relative;
+    }
+    label { display: inline-block; width: 150px; color: black; }
+    .line { height: 2px; background: black; margin: 10px 0; }
+    .expenseArea {
+      position: absolute; 
+      top: 280px;
+      margin: 20px; 
+      padding: 15px;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 8px; 
+      color: black; 
+      display: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      width: 80%;
+      max-width: 600px;
+    }
+    .expense-item {
+      margin-bottom: 8px; 
+      padding: 8px;
+      background-color: rgba(0,0,0,0.1);
+      border-radius: 4px;
+    }
+    button.expenses {
+      background: #4CAF50; 
+      color: white;
+      border: none; 
+      padding: 10px 20px;
+      border-radius: 5px; 
+      cursor: pointer;
+      margin: 20px;
+    }
+    span { color: black; }
+    .back { height: 50px; width: 50px; }
+    .editbtn {
+      background: red; 
+      position: absolute;
+      right: 20px;
+      top: 80px;
+    }
+    .display {
+      background: red; 
+      padding: 15px;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 220px;
+      text-align: center; 
+      display: none;
+      border-radius: 8px;
+      color: white;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .display input { 
+      margin: 8px 0;
+      width: 90%;
+      padding: 5px;
+    }
+    .display button.close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: none;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .editbtntwo {
+      background: red;
+      position: absolute;
+      right: 20px;
+      top: 260px;
+    }
+    .displaya {
+      width: 220px; 
+      background: red; 
+      padding: 15px;
+      position: absolute;
+      right: 20px;
+      top: 290px;
+      color: white; 
+      border-radius: 8px;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      display: none;
+    }
+    .displaya input {
+      width: 100%; 
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+    .displaya button.close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: none;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .edit-salary-btn {
+      background: blue; 
+      color: white;
+      border: none; 
+      padding: 10px 20px;
+      border-radius: 5px; 
+      cursor: pointer;
+      margin: 20px;
+    }
+    .section-title {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .expense-close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
     <a href="mfish.html"><img src="Img/1746667598930.png" class="back"></a>
-      <div class="name">
-        <h4 id="class">Class: Loading...</h4>
-        <h4 id="name">User: Loading...</h4>
-      </div>
-      <img class="imp" src="Img/Imp design 2.1-01 (1)-7.png">
-  
-      <div class="feed">
-        <label>Salary:</label>
-        <span id="salary">Loading...</span><br>
-        <label>Stipend:</label>
-        <span id="stipend">Loading...</span><br>
-        <label>Allowance:</label>
-        <span id="allowance">Loading...</span><br>
-        <label>Project Cap:</label>
-        <span id="project">Loading...</span>
-      </div>
-      
-      <button class="expenses" onclick="toggleExpenses()">Show Expenses</button>
-        
-      <div class="expenseArea" id="expenseArea"></div>
-        
-      <div class="fishonly">
-        <h3>FISH only</h3>  
-        <div class="line"></div>
-        <h2>Extra Expenses</h2>
-        <label>Travel allowance:</label>
-        <span id="travel">Loading...</span><br>
-        <label>Food allowance:</label>
-        <span id="food">Loading...</span><br>
-        <label>Extra allowance:</label>
-        <span id="extra">Loading...</span>
-        <h2>Totals</h2>
-        <label>Bill total:</label>
-        <span id="bills">Loading...</span><br>
-        <label>w/extra:</label>
-        <span id="addextra">Loading...</span><br>
-        <label>w/bonus:</label>
-        <span id="addbonus">Loading...</span>
-        <h2>Goal</h2>
-        <label>Daily:</label>
-        <span id="daily">Loading...</span><br>
-      </div>
+    <div class="name">
+      <h4 id="class">Class: Loading...</h4>
+      <h4 id="name">User: Loading...</h4>
     </div>
+    <img class="imp" src="Img/Imp design 2.1-01 (1)-7.png">
+    <div class="feed">
+      <label>Salary:</label><span id="salary">Loading...</span><br>
+      <label>Stipend:</label><span id="stipend">Loading...</span><br>
+      <label>Allowance:</label><span id="allowance">Loading...</span><br>
+      <label>Project Cap:</label><span id="project">Loading...</span>
+      <button class="edit-salary-btn" id="editSalaryBtn">Edit Salary Group</button>
+    </div>
+    <button class="expenses" onclick="toggleExpenses()">Show Expenses</button>
+    <div class="expenseArea" id="expenseArea"></div>
+    <div class="fishonly" id="fishonly">
+      <h3 class="section-title">FISH only</h3>
+      <div class="display" id="extrasDisplay"></div>
+      <div class="line"></div>
+      <h2>Extra Expenses</h2>
+      <button class="editbtn" onclick="edit()">edit</button>
+      <label>Travel allowance:</label><span id="travel">Loading...</span><br>
+      <label>Food allowance:</label><span id="food">Loading...</span><br>
+      <label>Extra allowance:</label><span id="extra">Loading...</span><br>
+      <h2 class="section-title">Totals</h2><br>
+      <div class="displaya" id="totalsDisplay"></div>
+      <button onclick="editbtntwo()" class="editbtntwo">edit</button>
+      <label>Bill total:</label><span id="bills">Loading...</span><br>
+      <label>w/extra:</label><span id="addextra">Loading...</span><br>
+      <label>w/bonus:</label><span id="addbonus">Loading...</span>
+      <h2>Goal</h2>
+      <label>Daily:</label><span id="daily">Loading...</span><br>
+      <label>Weekly:</label><span id="weekly">Loading...</span>
+    </div>
+  </div>
 
-    <script>
-      // Toggle expenses display
-      function toggleExpenses() {
-        const expenseArea = document.getElementById('expenseArea');
-        const btn = document.querySelector('.expenses');
-        
-        if (expenseArea.style.display === 'none' || !expenseArea.style.display) {
-          showExpenses();
-          expenseArea.style.display = 'block';
-          btn.textContent = 'Hide Expenses';
-        } else {
-          expenseArea.style.display = 'none';
-          btn.textContent = 'Show Expenses';
-        }
+<script>
+  let display = null;
+
+  function edit() {
+    const displayDiv = document.getElementById('extrasDisplay');
+    if (displayDiv.style.display === 'none' || !displayDiv.style.display) {
+      createEditForm();
+    } else {
+      displayDiv.style.display = 'none';
+    }
+  }
+
+  function createEditForm() {
+    display = document.getElementById('extrasDisplay');
+    display.innerHTML = `
+      <button class="close-btn" onclick="edit()">×</button>
+      <div><label>Travel allowance:</label><input type="text" id="travelInput"></div>
+      <div><label>Food allowance:</label><input type="text" id="foodInput"></div>
+      <div><label>Extra allowance:</label><input type="text" id="extraInput"></div>
+      <button onclick="sendUpdate()">Update</button>
+    `;
+    display.style.display = "block";
+  }
+
+  function sendUpdate() {
+    const extrasObj = {
+      travelValue: document.getElementById("travelInput").value || '0',
+      foodValue: document.getElementById("foodInput").value || '0',
+      extraValue: document.getElementById("extraInput").value || '0'
+    };
+    localStorage.setItem("extrasData", JSON.stringify(extrasObj));
+
+    document.getElementById('travel').textContent = `$${extrasObj.travelValue}`;
+    document.getElementById('food').textContent = `$${extrasObj.foodValue}`;
+    document.getElementById('extra').textContent = `$${extrasObj.extraValue}`;
+
+    document.getElementById('extrasDisplay').style.display = "none";
+    calculateTotalExpenses();
+  }
+
+  function editbtntwo() {
+    const displaya = document.getElementById('totalsDisplay');
+    if (displaya.style.display === 'none' || !displaya.style.display) {
+      displaya.innerHTML = `
+        <button class="close-btn" onclick="editbtntwo()">×</button>
+        <h3>Edit Totals</h3>
+        <div><label>Bill Total:</label><input type="text" id="edit-bill-total" placeholder="Enter amount"></div>
+        <div><label>With Extra:</label><input type="text" id="edit-with-extra" placeholder="Enter amount"></div>
+        <div><label>With Bonus:</label><input type="text" id="edit-with-bonus" placeholder="Enter amount"></div>
+        <button onclick="updateTotals()">Update</button>
+      `;
+      displaya.style.display = "block";
+    } else {
+      displaya.style.display = "none";
+    }
+  }
+
+  function updateTotals() {
+    const billTotal = document.getElementById('edit-bill-total').value;
+    const withExtra = document.getElementById('edit-with-extra').value;
+    const withBonus = document.getElementById('edit-with-bonus').value;
+
+    if (billTotal) document.getElementById('bills').textContent = `$${billTotal}`;
+    if (withExtra) document.getElementById('addextra').textContent = `$${withExtra}`;
+    if (withBonus) document.getElementById('addbonus').textContent = `$${withBonus}`;
+
+    calculateTotalExpenses();
+    document.getElementById('totalsDisplay').style.display = "none";
+  }
+
+  function toggleExpenses() {
+    const expenseArea = document.getElementById('expenseArea');
+    const btn = document.querySelector('.expenses');
+    if (expenseArea.style.display === 'none' || !expenseArea.style.display) {
+      showExpenses();
+      expenseArea.style.display = 'block';
+      btn.textContent = 'Hide Expenses';
+    } else {
+      expenseArea.style.display = 'none';
+      btn.textContent = 'Show Expenses';
+    }
+  }
+
+  function showExpenses() {
+    const expenses = safeParse(localStorage.getItem('expenses')) || [];
+    const expenseArea = document.getElementById('expenseArea');
+    expenseArea.innerHTML = '';
+
+    // Add close button at the top
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    closeBtn.className = 'expense-close-btn';
+    closeBtn.onclick = toggleExpenses;
+    expenseArea.appendChild(closeBtn);
+
+    const userExpenses = expenses.filter(exp => exp.count === 0);
+
+    if (userExpenses.length === 0) {
+      const noExpenses = document.createElement('p');
+      noExpenses.textContent = 'No expenses found';
+      expenseArea.appendChild(noExpenses);
+      calculateTotalExpenses();
+      return;
+    }
+
+    const header = document.createElement('h3');
+    header.textContent = 'Expenses for ' + (safeParse(localStorage.getItem('users'))?.find(u => u.count === 0)?.username || 'User');
+    expenseArea.appendChild(header);
+
+    userExpenses.forEach(exp => {
+      const item = document.createElement('div');
+      item.className = 'expense-item';
+      const amt = parseFloat(exp.billamt);
+      item.innerHTML = `
+        <strong>${exp.billname || 'Unnamed Bill'}</strong><br>
+        Amount: $${isNaN(amt) ? 'N/A' : amt.toFixed(2)}<br>
+        Frequency: ${exp.due || 'Not specified'}
+      `;
+      expenseArea.appendChild(item);
+    });
+
+    calculateTotalExpenses();
+  }
+
+  function safeParse(data) {
+    try { return data ? JSON.parse(data) : null; } 
+    catch (e) { return null; }
+  }
+
+  function findUser(array, count) {
+    return Array.isArray(array) ? array.find(item => item.count === count) : null;
+  }
+
+  function setDefaultValues() {
+    [
+      '#salary', '#stipend', '#allowance', '#project', 
+      '#bills', '#addextra', '#addbonus', '#daily', '#weekly'
+    ].forEach(selector => {
+      const el = document.querySelector(selector);
+      if (el) el.textContent = '$0';
+    });
+  }
+
+  function populateExtrasData(data) {
+    if (!data) return;
+    document.getElementById('travel').textContent = `$${data.travelValue || '0'}`;
+    document.getElementById('food').textContent = `$${data.foodValue || '0'}`;
+    document.getElementById('extra').textContent = `$${data.extraValue || '0'}`;
+  }
+
+  function handleErrors() {
+    document.querySelectorAll('span').forEach(el => {
+      if (el.textContent === 'Loading...') el.textContent = 'Not available';
+    });
+  }
+
+  function calculateTotalExpenses() {
+    const expenses = safeParse(localStorage.getItem('expenses')) || [];
+    const total = expenses.filter(exp => exp.count === 0).reduce((sum, e) => {
+      const amt = parseFloat(e.billamt);
+      return sum + (isNaN(amt) ? 0 : amt);
+    }, 0);
+    document.getElementById('bills').textContent = `$${total.toFixed(2)}`;
+
+    const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
+    const travel = parseFloat(extrasData.travelValue) || 0;
+    const food = parseFloat(extrasData.foodValue) || 0;
+    const extra = parseFloat(extrasData.extraValue) || 0;
+
+    const totalWithExtras = total + travel + food + extra;
+    document.getElementById('addextra').textContent = `$${totalWithExtras.toFixed(2)}`;
+
+    const bonusValue = totalWithExtras / 0.5;
+    document.getElementById('addbonus').textContent = `$${bonusValue.toFixed(2)}`;
+
+    const daily = parseFloat((bonusValue / 42).toFixed(2));
+    const weekly = parseFloat((bonusValue / 7).toFixed(2));
+
+    document.getElementById('daily').textContent = `$${daily}`;
+    document.getElementById('weekly').textContent = `$${weekly}`;
+
+    const monthlyExpenses = {
+      travel, food, extra,
+      bills: total,
+      addextra: totalWithExtras,
+      addbonus: bonusValue,
+      daily, weekly,
+      count: 0
+    };
+
+    localStorage.setItem('monthlyExpenses', JSON.stringify(monthlyExpenses));
+
+    return total;
+  }
+
+  function editSalaryGroup() {
+    const fields = ['salary', 'allowance', 'stipend', 'project'];
+    const currentData = JSON.parse(localStorage.getItem('salaryData')) || {
+      salary: 138,
+      allowance: 0,
+      stipend: 0,
+      project: 0
+    };
+
+    fields.forEach(field => {
+      const newValue = prompt(`Enter new ${field} value:`, currentData[field] || 0);
+      if (newValue !== null && !isNaN(parseFloat(newValue))) {
+        currentData[field] = parseFloat(newValue);
+      }
+    });
+
+    localStorage.setItem('salaryData', JSON.stringify(currentData));
+
+    document.getElementById('salary').textContent = `$${currentData.salary}`;
+    document.getElementById('allowance').textContent = `$${currentData.allowance}`;
+    document.getElementById('stipend').textContent = `$${currentData.stipend}`;
+    document.getElementById('project').textContent = `$${currentData.project}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      // Load all data from localStorage
+      const users = safeParse(localStorage.getItem('users')) || [];
+      const classes = safeParse(localStorage.getItem('classes')) || [];
+      const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
+      const monthlyExpenses = safeParse(localStorage.getItem('monthlyExpenses')) || {};
+      const expenses = safeParse(localStorage.getItem('expenses')) || [];
+
+      // Set user and class info
+      document.getElementById('name').textContent = `User: ${findUser(users, 0)?.username || 'Not set'}`;
+      document.getElementById('class').textContent = `Class: ${findUser(classes, 0)?.classname || 'Not set'}`;
+
+      // Initialize salaryData with default values if not present
+      if (!localStorage.getItem('salaryData')) {
+        const initialData = {
+          salary: 138,
+          allowance: 0,
+          stipend: 0,
+          project: 0
+        };
+        localStorage.setItem('salaryData', JSON.stringify(initialData));
       }
 
-      // Function to show expenses
-      function showExpenses() {
-        try {
-          // Get expenses from localStorage
-          const expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
-          const expenseArea = document.getElementById('expenseArea');
-          
-          // Clear previous content
-          expenseArea.innerHTML = '';
-          
-          // Find expenses for count 0 (Ian Fermy)
-          const userExpenses = expenses.filter(exp => exp.count === 0);
-          
-          if (userExpenses.length === 0) {
-            expenseArea.innerHTML = '<p>No expenses found for this user</p>';
-            return;
-          }
-          
-          // Create header
-          const header = document.createElement('h3');
-          header.textContent = 'Expenses for Ian Fermy';
-          expenseArea.appendChild(header);
-          
-          // Create list of expenses
-          userExpenses.forEach(expense => {
-            const item = document.createElement('div');
-            item.className = 'expense-item';
-            item.innerHTML = `
-              <strong>${expense.billname}</strong><br>
-              Amount: $${expense.billamt}<br>
-              Frequency: ${expense.due}
-            `;
-            expenseArea.appendChild(item);
-          });
-        } catch (error) {
-          console.error('Error showing expenses:', error);
-          document.getElementById('expenseArea').innerHTML = 
-            '<p>Error loading expenses. Check console for details.</p>';
-        }
+      // Load and display salary data
+      const salaryData = JSON.parse(localStorage.getItem('salaryData'));
+      document.getElementById('salary').textContent = `$${salaryData.salary}`;
+      document.getElementById('allowance').textContent = `$${salaryData.allowance}`;
+      document.getElementById('stipend').textContent = `$${salaryData.stipend}`;
+      document.getElementById('project').textContent = `$${salaryData.project}`;
+
+      // Set up edit salary button
+      document.getElementById('editSalaryBtn').addEventListener('click', editSalaryGroup);
+
+      // Load and display extras data
+      populateExtrasData(extrasData);
+
+      // Load and display monthly expenses if they exist
+      if (Object.keys(monthlyExpenses).length > 0) {
+        document.getElementById('bills').textContent = `$${monthlyExpenses.bills?.toFixed(2) || '0'}`;
+        document.getElementById('addextra').textContent = `$${monthlyExpenses.addextra?.toFixed(2) || '0'}`;
+        document.getElementById('addbonus').textContent = `$${monthlyExpenses.addbonus?.toFixed(2) || '0'}`;
+        document.getElementById('daily').textContent = `$${monthlyExpenses.daily || '0'}`;
+        document.getElementById('weekly').textContent = `$${monthlyExpenses.weekly || '0'}`;
+      } else if (expenses.length > 0) {
+        // Calculate totals if we have expenses but no monthly data
+        calculateTotalExpenses();
       }
 
-      document.addEventListener('DOMContentLoaded', function() {
-        try {
-          // Get all data from localStorage
-          const users = JSON.parse(localStorage.getItem('users') || '[]');
-          const classes = JSON.parse(localStorage.getItem('classes') || '[]');
-          const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
-          
-          // Find count 0 entries
-          const user = users.find(u => u.count === 0) || {};
-          const cls = classes.find(c => c.count === 0) || {};
-          const session = sessions.find(s => s.count === 0) || {};
-          
-          // Populate user info
-          document.getElementById('name').textContent = `User: ${user.username || 'Not set'}`;
-          document.getElementById('class').textContent = `Class: ${cls.classname || 'Not set'}`;
-          
-          // Financial fields placeholder
-          document.querySelectorAll('#salary, #stipend, #allowance, #project, #travel, #food, #extra, #bills, #addextra, #addbonus, #daily').forEach(el => {
-            el.textContent = '$0';
-          });
-        } catch (error) {
-          console.error('Error loading data:', error);
-          document.querySelectorAll('span').forEach(el => {
-            el.textContent = 'Error';
-          });
-        }
-      });
-    </script>
-  </body>
+    } catch (e) {
+      console.error('Error loading data:', e);
+      handleErrors();
+    }
+  });
+</script>
+</body>
 </html>
