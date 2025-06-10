@@ -8,16 +8,15 @@
         padding: 0;
         font-family: Arial, sans-serif;
       }
-      
+
       .background {
         background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center fixed;
         background-size: cover;
         min-height: 100vh;
         width: 100%;
         padding: 20px;
-        
       }
-      
+
       button {
         margin: 5px;
         padding: 8px 15px;
@@ -27,40 +26,47 @@
         border-radius: 4px;
         cursor: pointer;
       }
-      
+
       button:hover {
         background: rgba(0,0,0,0.9);
       }
-      
+
       #display {
         margin-top: 20px;
         background: rgba(0,0,0,0.7);
         padding: 15px;
         border-radius: 5px;
       }
-      
+
       .day-entry {
         margin-bottom: 15px;
         padding: 10px;
         background: rgba(255,255,255,0.1);
         border-radius: 4px;
       }
+
+      .back {
+        height: 50px;
+        width: 50px;
+      }
     </style>
   </head>
   <body>
     <div class="background">
+      <a href="income.html"><img class="back" src="Img/1746667598930.png"></a>
       <h3>current session</h3>
       <span id="session"></span>
-     
+
       <button onclick="showWeekData(1)">week 1</button>
       <button onclick="showWeekData(2)">week 2</button>
       <button onclick="showWeekData(3)">week 3</button>
       <button onclick="showWeekData(4)">week 4</button>
       <button onclick="showWeekData(5)">week 5</button>
       <button onclick="showWeekData(6)">week 6</button>
-    
+
       <div id="display"></div>
     </div>
+
     <script>
       function showWeekData(weekNumber) {
         const display = document.getElementById("display");
@@ -77,17 +83,15 @@
         
         // Find sessions for the requested week
         let hasData = false;
-        
+
         for (const [sessionId, session] of Object.entries(appData.sessions)) {
           if (session.weekNumber === weekNumber && session.weekData && Object.keys(session.weekData).length > 0) {
             hasData = true;
-            
-            // Create week info header
+
             const weekHeader = document.createElement("h3");
             weekHeader.innerText = `Week ${weekNumber} Data (Session: ${new Date(session.createdAt).toLocaleDateString()})`;
             display.appendChild(weekHeader);
 
-            // Display each day's data
             for (const [dayKey, dayData] of Object.entries(session.weekData)) {
               const dayDiv = document.createElement("div");
               dayDiv.className = "day-entry";
@@ -106,8 +110,19 @@
         }
       }
 
-      // Load week 1 by default
-      showWeekData(1);
+      // Run on page load
+      window.onload = function () {
+        showWeekData(1); // Load week 1 by default
+
+        // Display current session
+        const savedAppData = localStorage.getItem("appData");
+        if (savedAppData) {
+          const appData = JSON.parse(savedAppData);
+          if (appData.lastEntry && appData.lastEntry.session) {
+            document.getElementById("session").textContent = appData.lastEntry.session;
+          }
+        }
+      };
     </script>
   </body>
 </html>

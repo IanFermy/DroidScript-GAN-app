@@ -15,10 +15,29 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centers content horizontally */
-        justify-content: center; /* Centers content vertically (optional) */
+        align-items: center;
         padding: 20px;
         box-sizing: border-box;
+        position: relative; /* Needed for absolute positioning of children */
+      }
+      
+      /* Back button styling */
+      .back-link {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 10; /* Ensures it stays above other elements */
+      }
+      
+      .back {
+        height: 50px;
+        width: 50px;
+        cursor: pointer; /* Shows it's clickable */
+        transition: transform 0.2s; /* Optional: adds hover effect */
+      }
+      
+      .back:hover {
+        transform: scale(1.1); /* Optional: slight enlargement on hover */
       }
       
       img {  
@@ -31,25 +50,43 @@
       span {
         display: block;
         margin-bottom: 20px;
-        color: black; /* Changed to black */
+        color: black;
         font-size: 18px;
         font-weight: bold;
-        text-align: center; /* Ensures text is centered */
+        text-align: center;
+      }
+      
+      /* Other menu items */
+      .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 0;
+        text-decoration: none;
+        color: inherit;
       }
     </style>
   </head>
   <body>
     <div class="background">
-      <img src="Img/1742895226419.png">
+      <!-- Fixed back button -->
+      <a href="buster.html" class="back-link">
+        <img src="Img/1746667598930.png" class="back" alt="Back button">
+      </a>
+      
+      <!-- Menu items -->
+      <img src="Img/1742895226419.png" alt="Academesea icon">
       <span>ACADEMESEA</span>
       
-     <a href="fish.html"> <img src="Img/1742865523697.png">
-      <span>FISH</span></span></a>
+      <a href="fish.html" class="menu-item">
+        <img src="Img/1742865523697.png" alt="Fish icon">
+        <span>FISH</span>
+      </a>
       
-      <img src="Img/1742894916324.png">
+      <img src="Img/1742894916324.png" alt="Hescheduli icon">
       <span>HESCHEDULI</span>
       
-      <img src="Img/1742895556721.png">
+      <img src="Img/1742895556721.png" alt="Lala icon">
       <span>LALA</span>
     </div>
   </body>

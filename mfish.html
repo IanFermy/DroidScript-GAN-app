@@ -111,6 +111,10 @@
       .m {
         margin-bottom: 20px;
       }
+      
+      .showBusters {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -137,14 +141,9 @@
     
     <script>
       function goUsers() {
-        var show = document.getElementById("showBusters");
-        
-        if (show.style.display === "none") {
-          show.style.display = "block";
-        } else {
-          show.style.display = "none";
-        }
-      }
+  var show = document.getElementById("showBusters");
+  show.style.display = show.style.display === "none" ? "block" : "none";
+}
     </script>
   </body>
 </html>

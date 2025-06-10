@@ -387,34 +387,54 @@
 }
 
   // Show session selection menu
-  function showSessionMenu() {
+  // Modified showSessionMenu function
+function showSessionMenu() {
     initializeStorage();
     const sessions = JSON.parse(localStorage.getItem('sessions'));
     const freeDiv = document.getElementById('free');
+    const clientsDiv = document.getElementById('clients');
+    
+    // Close both if already showing
+    if (freeDiv.style.display === 'block') {
+        freeDiv.style.display = 'none';
+        clientsDiv.style.display = 'none';
+        return;
+    }
     
     if (!sessions.length) {
-      freeDiv.innerHTML = '<p>No sessions available</p>';
-      freeDiv.style.display = 'block';
-      return;
+        freeDiv.innerHTML = '<p>No sessions available</p>';
+        freeDiv.style.display = 'block';
+        clientsDiv.style.display = 'none'; // Ensure client list is hidden
+        return;
     }
     
     let html = '<h4>Select Session</h4>';
     sessions.forEach(session => {
-      html += `<button onclick="displaySession(${session.count})">${session.session}</button><br>`;
+        html += `<button onclick="displaySession(${session.count})">${session.session}</button><br>`;
     });
     freeDiv.innerHTML = html;
     freeDiv.style.display = 'block';
-  }
+    clientsDiv.style.display = 'none'; // Hide client list when showing sessions
+}
 
-  // Display session details
-  function displaySession(count) {
+// Modified displaySession function
+function displaySession(count) {
+    const freeDiv = document.getElementById('free');
+    const clientsDiv = document.getElementById('clients');
+    
+    // Close both if clicking the same session again
+    if (freeDiv.style.display === 'block' && freeDiv.innerHTML.includes(`count === ${count}`)) {
+        freeDiv.style.display = 'none';
+        clientsDiv.style.display = 'none';
+        return;
+    }
+    
     initializeStorage();
     
     const users = JSON.parse(localStorage.getItem('users'));
     const sessions = JSON.parse(localStorage.getItem('sessions'));
     const classes = JSON.parse(localStorage.getItem('classes'));
     const expenses = JSON.parse(localStorage.getItem('expenses'));
-    const freeDiv = document.getElementById('free');
     
     const user = users.find(u => u.count === count);
     const session = sessions.find(s => s.count === count);
@@ -428,24 +448,41 @@
                <h4>Expenses:</h4>`;
     
     if (sessionExpenses.length) {
-      html += '<ul>';
-      sessionExpenses.forEach(expense => {
-        html += `<li>${expense.billname}: $${expense.billamt} (${expense.due})</li>`;
-      });
-      html += '</ul>';
+        html += '<ul>';
+        sessionExpenses.forEach(expense => {
+            html += `<li>${expense.billname}: $${expense.billamt} (${expense.due})</li>`;
+        });
+        html += '</ul>';
     } else {
-      html += '<p>No expenses found</p>';
+        html += '<p>No expenses found</p>';
     }
+    
+    // Add close button that closes both
+    html += `<button onclick="document.getElementById('free').style.display='none'; 
+                              document.getElementById('clients').style.display='none'">
+             Close
+             </button>`;
     
     freeDiv.innerHTML = html;
     freeDiv.style.display = 'block';
-  }
+    clientsDiv.style.display = 'none'; // Hide client list when showing details
+}
 
-  // Toggle clients panel
-  function toggleClients() {
+// Modified toggleClients function
+function toggleClients() {
     const clientsDiv = document.getElementById('clients');
-    clientsDiv.style.display = clientsDiv.style.display === 'none' ? 'block' : 'none';
-  }
+    const freeDiv = document.getElementById('free');
+    
+    if (clientsDiv.style.display === 'block') {
+        // If client list is visible, close both
+        clientsDiv.style.display = 'none';
+        freeDiv.style.display = 'none';
+    } else {
+        // If client list is hidden, show only client list
+        clientsDiv.style.display = 'block';
+        freeDiv.style.display = 'none'; // Ensure session menu is hidden
+    }
+}
 
   // Initialize on page load and load last entry
   initializeStorage();

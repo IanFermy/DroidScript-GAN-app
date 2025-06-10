@@ -3,250 +3,114 @@
   <head>
     <style>
       html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+  height: 90%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-      .background {
-        height: 100%;
-        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
-        background-size: cover;
-      }
-      
-     .title {
-       text-align: center;
-       position: relative;
-       top: 50px;
-       
-      } 
-      
-      img {
-        height: 80px;
-        width: 80px;
-        position: relative;
-        left: 145px;
-        top: 20px;
-      }
-      
-      button{
-        display: block;
-        margin: 5px;
-      }
-      
-      .display {
-        border: 2px solid black;
-        height: 450px;
-        width: 80%;
-        position: relative;
-        left: 35px;
-        top: 20px;
-      }
-      
-      .userClass {
-        position: relative;
-        left: 50%;
-       }
-       
-       .userName {
-         position: relative;
-         left: 50%
-       }
-       
-       .formTitle {
-         text-align: center;
-       }
-       
-       .dateInput {
-         position: relative;
-         left: 30%;
-         bottom: 15px;
-       }
-       
-       .billInputName {
-         position: relative;
-         right: 130px;
-         top: 10px;
-       }
-       
-       .billInput {
-         position: relative;
-         right: 125px;
-         top: 11px;
-         margin: 0px;
-         padding: 0px;
-       }
-       
-       .stipendInput {
-         position: relative;
-         right: 114px;
-         top: 11px;
-       }
-       
-       .stipendInputName {
-         position: relative;
-         right: 115px;
-         top: 10px;
-       }
-       
-       .allowanceName {
-         position: relative;
-         left: 147px;
-         bottom: 18px;
-       }
-       
-       .allowanceInput {
-          position: relative;
-          left: 150px;
-          bottom: 15px;
-       }
-       
-       .displaya {
-         position: relative;
-         top: 10px;
-       }
-       
-       .displayb {
-         position: relative;
-         top: 50px;
-       }
-       
-       .displayc {
-        
-       }
-      
-      .amount {
-        position: relative;
-        top: 20px;
-        display: inline-block;
-      }
-      
-      .reason {
-        position: relative;
-        top: 50px;
-        right: 180px;
-      }
-      
-      .displayb {
-        display: inline-block;
-      }
-      
-      .responseTitle {
-        
-      }
-      
-      .responseSalaryName {
-      position: relative;
-      bottom: 15px;
-      }
-      
-      .responseSalaryValue {
-      position: relative;
-      bottom: 15px;
-      }
-      
-      .responseAllowanceName {
-      position: relative;
-      top: 5px;
-      right: 60px;
-      }
-      
-      .responseAllowanceValue {
-        position: relative;
-        top: 5px;
-        right: 60px;
-      }
-      
-      .responseProjectName {
-        position: relative;
-        top:25px;
-        right: 150px;
-      }
-      
-      .responseProjectValue {
-        position: relative;
-        top: 25px;
-        right: 150px;
-      }
-      
-      .displayc {
-        position: relative;
-        top: 60px;
-      }
-      
-      .question {
-        
-      }
-      
-      .questionResponse  {
-      
-      }
-      
-      .overall {
-      
-      }
-      
-       .projectInput {
-         
-       }
-       
-       .projectInputName {
-         
-       }
-       
-       .depositTitle {
-         text-align: center;
-       }
-       
-       .nameName {
-         
-       }
-       
-       .nameValue {
-       
-       }
-       
-       .accFrom {
-         position: relative;
-         top: 20px;
-         right: 50px;
-       }
-       
-       .accValue {
-         position: relative;
-         top: 20px;
-         right: 50px;
-      }
-      
-      .accTo {
-        position: relative;
-        top: 35px;
-        right: 124px;
-      }
-      
-      .accToValue {
-        position: relative;
-        top: 35px;
-        right: 124px;
-      }
-       
-       .border {
-         background: blue;
-         height: 10px;
-         width: 100px;
-         position: relative;
-         top: 35px;
-       }
-       
-       .displayd {
-         position: relative;
-         top: 30px;
-       }
-       
+.background {
+  min-height: 110vh;
+  background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
+  background-size: cover;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  margin-top: 50px;
+  color: #333;
+}
+
+.img {
+  height: 80px;
+  width: 80px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 200px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.display {
+  border: 2px solid black;
+  height: 450px;
+  width: 90%;
+  max-width: 600px;
+  overflow-y: auto;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Deposit Form Styling */
+.depositTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.formGroup {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.formGroup span {
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+.border {
+  height: 2px;
+  width: 100px;
+  background: blue;
+  margin: 20px auto;
+}
+
+.displayd {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.displayd input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.back {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+}
     </style>
   </head>
   <body>
     <div class="background">
+      <a href="fish.html"><img class="back" src="Img/1746667598930.png"></a>
       <h3 class="title">powers</h3>
       <img class="img" src="Img/1747433633213.png">
       <button onclick="financial()">financial request</button>
@@ -259,204 +123,251 @@
       
       
         function financial() {
-         var display =  document.getElementById("display");
-         
-          var userClass = document.createElement("span");
-          userClass.innerText = "X";
-          userClass.className = "userClass";
-          display.appendChild(userClass);
-          
-          var userName = document.createElement("h4");
-          userName.innerText = "X";
-          userName.className = "userName";
-          display.appendChild(userName);
-          
-          var formTitle = document.createElement("h3");
-          formTitle.innerText = "Financial Request Form";
-          formTitle.className = "formTitle";
-          display.appendChild(formTitle);
-          
-          var dateInput = document.createElement("input");
-          dateInput.type= "date";
-          dateInput.placeholder = "date";
-          dateInput.className = "dateInput";
-          display.appendChild(dateInput);
-          
-          var billInput = document.createElement("input");
-          billInput.className = "billInput";
-          var billInputName = document.createElement("span");
-          billInputName.className = "billInputName";
-           billInputName.innerText = "bill";
-           display.appendChild(billInputName);
-          billInput.type= "checkbox";
-          billInput.value= "bill";
-          display.appendChild(billInput);
-          
-          var stipendInput = document.createElement("input");
-          stipendInput.className = "stipendInput";
-          var stipendInputName = document.createElement("span");
-          stipendInputName.className = "stipendInputName";
-           stipendInputName.innerText = "stipend";
-           display.appendChild(stipendInputName);
-          stipendInput.type= "checkbox";
-          stipendInput.value= "stipend";
-          display.appendChild(stipendInput);
-          
-          var allowanceInput = document.createElement("input");
-          allowanceInput.className = "allowanceInput";
-          var allowanceName = document.createElement("span");
-          allowanceName.className = "allowanceName";
-           allowanceName.innerText = "allowance";
-           display.appendChild(allowanceName);
-          allowanceInput.type= "checkbox";
-          allowanceInput.value= "allowance";
-          display.appendChild(allowanceInput);;
-        
-        var projectInput = document.createElement("input");
-        projectInput.className = "projectInput";
-          var projectInputName = document.createElement("span");
-          projectInputName.className = "projectInputName";
-           projectInputName.innerText = "project cap";
-           display.appendChild(projectInputName);
-          projectInput.type= "checkbox";
-          projectInput.value= "project";
-          display.appendChild(projectInput);
-          
-          var displaya = document.createElement("div");
-displaya.innerHTML = `
-  <label>Salary:</label>
-  <span id="salary">Loading...</span><br>
-  <label>Stipend:</label>
-  <span id="stipend">Loading...</span><br>
-  <label>Allowance:</label>
-  <span id="allowance">Loading...</span><br>
-  <label>Project Cap:</label>
-  <span id="project">Loading...</span>
-`;
-displaya.className="displaya";
-display.appendChild(displaya); // Add this line to actually show the element
-          
-        var amount =   document.createElement("input");
-        amount.placeholder = "amount requested";
-        amount.className = "amount";
-        displaya.appendChild(amount);
-        
-        var reason = document.createElement("select");
-        reason.className = "reason";
-        displaya.appendChild(reason);
-        
-        var displayb = document.createElement("div");
-        displayb.className = "displayb";
-        display.appendChild(displayb);
-        
-       var responseTitle =  document.createElement("h4");
-       responseTitle.innerText = "remainder"; 
-       responseTitle.className = "responseTitle";
-       displayb.appendChild(responseTitle);
-       
-       var responseSalaryName =  document.createElement("span");
-       responseSalaryName.innerText = "salary:  ";
-       responseSalaryName.className = "responseSalaryName";
-       displayb.appendChild(responseSalaryName);
-          
-          var responseSalaryValue =  document.createElement("span");
-          responseSalaryValue.innerText = "X";
-          responseSalaryValue.className = "responseSalaryValue";
-       displayb.appendChild(responseSalaryValue);
-       
-       var responseAllowanceName =  document.createElement("span");
-       responseAllowanceName.innerText = "allowance: ";
-       responseAllowanceName.className = "responseAllowanceName";
-       displayb.appendChild(responseAllowanceName);
-          
-          var responseAllowanceValue =  document.createElement("span");
-          responseAllowanceValue.innerText = "X";
-          responseAllowanceValue.className = "responseAllowanceValue";
-       displayb.appendChild(responseAllowanceValue);
-       
-       var responseProjectName =  document.createElement("span");
-       responseProjectName.innerText = "project cap: ";
-       responseProjectName.className = "responseProjectName";
-       displayb.appendChild(responseProjectName);
-          
-          var responseProjectValue =  document.createElement("span");
-          responseProjectValue.innerText = "X";
-          responseProjectValue.className = "responseProjectValue";
-       displayb.appendChild(responseProjectValue);
-       
-       var displayc = document.createElement("div");
-       displayc.className = "displayc";
-       display.appendChild(displayc);
-       
-       var question = document.createElement("p");
-       question.innerText = "Is the level of return appropriate for the requested amount?";
-       question.className = "question";
-       displayc .appendChild(question);
-       
-       var questionResponse = document.createElement("span");
-       questionResponse.className="questionResponse";
-       displayc.appendChild(questionResponse);
-       
-       var overall = document.createElement("span");
-       overall.className = "overall";
-       displayc.appendChild(overall);
-          }
-        
-        function deposit() {
-          var display = document.getElementById("display");
-          
-          var title =  document.createElement("h3");
-          title.innerText = "deposit slip";
-          title.className = "depositTitle";
-          display.appendChild(title);
-          
-          var nameName = document.createElement("span");
-          nameName.innerText = "name";
-          display.appendChild(nameName);
-          nameName.className = "nameName";
-          var nameValue = document.createElement("span");
-          nameValue.innerText = "X";
-          nameValue.className = "nameValue";
-          display.appendChild(nameValue);
-          
-          var accFrom= document.createElement("span");
-          accFrom.className = "accFrom";
-          var accValue = document.createElement("span");
-          accValue.className = "accValue";
-          accValue.innerText = "X";
-          accFrom.innerText = "from acc";
-          display.appendChild(accFrom);
-          display.appendChild(accValue);
-          
-         var accTo = document.createElement("span");
-         accTo.className = "accTo";
-         accTo.innerText = "to acc";
-         display.appendChild(accTo);
-         var accToValue = document.createElement("span");
-         accToValue.className = "accToValue";
-         accToValue.innerText = "X";
-         display.appendChild(accToValue);
-         
-         var border = document.createElement("div");
-         border.className = "border";
-         display.appendChild(border);
-         
-         var displayd = document.createElement("div");
-         displayd.className = "displayd";
-         display.appendChild(displayd);
-         
-         var date = document.createElement("input");
-         date.type = "date";
-         displayd.appendChild(date);
-          
-          var total = document.createElement("input");
-          total.placeholder = "deposit amount";
-          displayd.appendChild(total);
-          
-          var source = document.createElement("input");
-          source.placeholder = "source";
-          displayd.appendChild(source);
+    var display = document.getElementById("display");
+    display.innerHTML = ''; // Clear previous content
+
+    // Get data from local storage
+    var salaryData = {
+        "salary": 138,
+        "allowance": 0,
+        "stipend": 0,
+        "project": 0,
+        "cap": 0
+    }; // Default values if not found
+    
+    // Try to get actual data from localStorage
+    try {
+        var storedData = localStorage.getItem('salaryData');
+        if (storedData) {
+            salaryData = JSON.parse(storedData);
         }
+    } catch (e) {
+        console.error("Error reading salaryData from localStorage:", e);
+    }
+
+    // Create form container
+    var formContainer = document.createElement("div");
+    formContainer.className = "financial-form";
+    display.appendChild(formContainer);
+
+    // Form title
+    var formTitle = document.createElement("h3");
+    formTitle.innerText = "Financial Request Form";
+    formTitle.style.textAlign = "center";
+    formTitle.style.marginBottom = "20px";
+    formTitle.style.color = "#333";
+    formContainer.appendChild(formTitle);
+
+    // Date input
+    var dateContainer = document.createElement("div");
+    dateContainer.style.marginBottom = "15px";
+    
+    var dateLabel = document.createElement("label");
+    dateLabel.innerText = "Date: ";
+    dateLabel.style.marginRight = "10px";
+    dateLabel.style.fontWeight = "bold";
+    
+    var dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.style.padding = "5px";
+    dateInput.style.borderRadius = "4px";
+    dateInput.style.border = "1px solid #ddd";
+    
+    dateContainer.appendChild(dateLabel);
+    dateContainer.appendChild(dateInput);
+    formContainer.appendChild(dateContainer);
+
+    // Checkbox options
+    var optionsContainer = document.createElement("div");
+    optionsContainer.style.marginBottom = "20px";
+    
+    function createCheckboxOption(label, value, currentValue) {
+        var optionDiv = document.createElement("div");
+        optionDiv.style.marginBottom = "8px";
+        
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = value;
+        checkbox.id = value + "-checkbox";
+        checkbox.style.marginRight = "10px";
+        
+        var labelElement = document.createElement("label");
+        labelElement.htmlFor = value + "-checkbox";
+        labelElement.innerHTML = `${label}: <strong>${currentValue}</strong>`;
+        
+        optionDiv.appendChild(checkbox);
+        optionDiv.appendChild(labelElement);
+        optionsContainer.appendChild(optionDiv);
+    }
+    
+    createCheckboxOption("Allowance", "allowance", salaryData.allowance);
+    createCheckboxOption("Project Cap", "project", salaryData.project || salaryData.cap || 0);
+    createCheckboxOption("Salary", "salary", salaryData.salary);
+    createCheckboxOption("Stipend", "stipend", salaryData.stipend);
+    
+    formContainer.appendChild(optionsContainer);
+
+    // Amount requested
+    var amountContainer = document.createElement("div");
+    amountContainer.style.marginBottom = "20px";
+    
+    var amountLabel = document.createElement("label");
+    amountLabel.innerText = "Amount Requested: ";
+    amountLabel.style.fontWeight = "bold";
+    amountLabel.style.marginRight = "10px";
+    
+    var amountInput = document.createElement("input");
+    amountInput.type = "number";
+    amountInput.placeholder = "Enter amount";
+    amountInput.style.padding = "5px";
+    amountInput.style.borderRadius = "4px";
+    amountInput.style.border = "1px solid #ddd";
+    amountInput.style.width = "150px";
+    
+    amountContainer.appendChild(amountLabel);
+    amountContainer.appendChild(amountInput);
+    formContainer.appendChild(amountContainer);
+
+    // Remainder section
+    var remainderContainer = document.createElement("div");
+    remainderContainer.style.marginTop = "25px";
+    remainderContainer.style.paddingTop = "15px";
+    remainderContainer.style.borderTop = "1px solid #ccc";
+    
+    var remainderTitle = document.createElement("h4");
+    remainderTitle.innerText = "Remainder";
+    remainderTitle.style.marginBottom = "15px";
+    remainderTitle.style.color = "#555";
+    remainderContainer.appendChild(remainderTitle);
+    
+    function createRemainderItem(label, value) {
+        var itemDiv = document.createElement("div");
+        itemDiv.style.marginBottom = "8px";
+        
+        var labelSpan = document.createElement("span");
+        labelSpan.innerText = label + ": ";
+        labelSpan.style.fontWeight = "bold";
+        labelSpan.style.marginRight = "5px";
+        
+        var valueSpan = document.createElement("span");
+        valueSpan.innerText = value;
+        
+        itemDiv.appendChild(labelSpan);
+        itemDiv.appendChild(valueSpan);
+        remainderContainer.appendChild(itemDiv);
+    }
+    
+    createRemainderItem("Salary", salaryData.salary);
+    createRemainderItem("Allowance", salaryData.allowance);
+    createRemainderItem("Project Cap", salaryData.project || salaryData.cap || 0);
+    
+    formContainer.appendChild(remainderContainer);
+
+    // Question section
+    var questionContainer = document.createElement("div");
+    questionContainer.style.marginTop = "25px";
+    questionContainer.style.paddingTop = "15px";
+    questionContainer.style.borderTop = "1px solid #ccc";
+    
+    var questionText = document.createElement("p");
+    questionText.innerText = "Is the level of return appropriate for the requested amount?";
+    questionText.style.fontWeight = "bold";
+    questionText.style.marginBottom = "15px";
+    questionContainer.appendChild(questionText);
+    
+    var responseDiv = document.createElement("div");
+    responseDiv.innerText = "X"; // Placeholder for response
+    responseDiv.style.color = "#666";
+    questionContainer.appendChild(responseDiv);
+    
+    formContainer.appendChild(questionContainer);
+
+    // Add some CSS directly for this form
+    var style = document.createElement("style");
+    style.textContent = `
+        .financial-form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .financial-form input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        
+        .financial-form label {
+            cursor: pointer;
+        }
+    `;
+    display.appendChild(style);
+}
+        
+       function deposit() {
+  var display = document.getElementById("display");
+  display.innerHTML = "";
+
+  var title = document.createElement("h3");
+  title.innerText = "deposit slip";
+  title.className = "depositTitle";
+  display.appendChild(title);
+
+  var formGroup = document.createElement("div");
+  formGroup.className = "formGroup";
+  display.appendChild(formGroup);
+
+  var nameName = document.createElement("span");
+  nameName.className = "nameName";
+  nameName.innerText = "name";
+  formGroup.appendChild(nameName);
+
+  var nameValue = document.createElement("span");
+  nameValue.className = "nameValue";
+  nameValue.innerText = "X";
+  formGroup.appendChild(nameValue);
+
+  var accFrom = document.createElement("span");
+  accFrom.className = "accFrom";
+  accFrom.innerText = "from acc";
+  formGroup.appendChild(accFrom);
+
+  var accValue = document.createElement("span");
+  accValue.className = "accValue";
+  accValue.innerText = "X";
+  formGroup.appendChild(accValue);
+
+  var accTo = document.createElement("span");
+  accTo.className = "accTo";
+  accTo.innerText = "to acc";
+  formGroup.appendChild(accTo);
+
+  var accToValue = document.createElement("span");
+  accToValue.className = "accToValue";
+  accToValue.innerText = "X";
+  formGroup.appendChild(accToValue);
+
+  var border = document.createElement("div");
+  border.className = "border";
+  display.appendChild(border);
+
+  var displayd = document.createElement("div");
+  displayd.className = "displayd";
+  display.appendChild(displayd);
+
+  var date = document.createElement("input");
+  date.type = "date";
+  displayd.appendChild(date);
+
+  var total = document.createElement("input");
+  total.placeholder = "deposit amount";
+  displayd.appendChild(total);
+
+  var source = document.createElement("input");
+  source.placeholder = "source";
+  displayd.appendChild(source);
+}
       </script>
   </body>
 </html>
