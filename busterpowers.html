@@ -3,109 +3,163 @@
   <head>
     <style>
       html, body {
-  height: 90%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+        height: 90%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
 
-.background {
-  min-height: 110vh;
-  background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
-  background-size: cover;
-  padding: 20px;
-  box-sizing: border-box;
-}
+      .background {
+        min-height: 110vh;
+        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
+        background-size: cover;
+        padding: 20px;
+        box-sizing: border-box;
+      }
 
-.title {
-  text-align: center;
-  margin-top: 50px;
-  color: #333;
-}
+      .title {
+        text-align: center;
+        margin-top: 50px;
+        color: #333;
+      }
 
-.img {
-  height: 80px;
-  width: 80px;
-  display: block;
-  margin: 0 auto 20px;
-}
+      .img {
+        height: 80px;
+        width: 80px;
+        display: block;
+        margin: 0 auto 20px;
+      }
 
-button {
-  display: block;
-  margin: 10px auto;
-  padding: 8px 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 200px;
-}
+      button {
+        display: block;
+        margin: 10px auto;
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 200px;
+      }
 
-button:hover {
-  background-color: #45a049;
-}
+      button:hover {
+        background-color: #45a049;
+      }
 
-.display {
-  border: 2px solid black;
-  height: 450px;
-  width: 90%;
-  max-width: 600px;
-  overflow-y: auto;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  box-sizing: border-box;
-}
+      .display {
+        border: 2px solid black;
+        height: 450px;
+        width: 90%;
+        max-width: 600px;
+        overflow-y: auto;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        box-sizing: border-box;
+      }
 
-/* Deposit Form Styling */
-.depositTitle {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
+      /* Deposit Form Styling */
+      .depositTitle {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-.formGroup {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 15px;
-  margin-bottom: 20px;
-}
+      .formGroup {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
 
-.formGroup span {
-  font-weight: bold;
-  padding: 5px 0;
-}
+      .formGroup span {
+        font-weight: bold;
+        padding: 5px 0;
+      }
 
-.border {
-  height: 2px;
-  width: 100px;
-  background: blue;
-  margin: 20px auto;
-}
+      .border {
+        height: 2px;
+        width: 100px;
+        background: blue;
+        margin: 20px auto;
+      }
 
-.displayd {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 30px;
-}
+      .displayd {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+      }
 
-.displayd input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
+      .displayd input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
 
-.back {
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-}
+      .back {
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+      }
+      
+      #billDisplay {
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+      }
+
+      #billDisplay div {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+      }
+
+      #billDisplay input[type="checkbox"] {
+        margin-right: 8px;
+      }
+
+      #billDisplay label {
+        cursor: pointer;
+        user-select: none;
+      }
+      
+      /* Consistent button styles */
+      .optionButton, .reasonButton {
+        display: inline-block;
+        margin: 5px;
+        padding: 8px 16px;
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 150px;
+        transition: all 0.3s;
+      }
+      
+      .optionButton:hover, .reasonButton:hover {
+        background-color: #e0e0e0;
+      }
+      
+      .optionButton.active, .reasonButton.active {
+        background-color: #4CAF50;
+        color: white;
+        border-color: #45a049;
+      }
+      
+      .financial-form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
     </style>
   </head>
   <body>
@@ -118,32 +172,10 @@ button:hover {
       
       <div class="display" id="display"></div>
     </div>
-      <script>
-      
-      
-      
-        function financial() {
+    <script>
+ function financial() {
     var display = document.getElementById("display");
-    display.innerHTML = ''; // Clear previous content
-
-    // Get data from local storage
-    var salaryData = {
-        "salary": 138,
-        "allowance": 0,
-        "stipend": 0,
-        "project": 0,
-        "cap": 0
-    }; // Default values if not found
-    
-    // Try to get actual data from localStorage
-    try {
-        var storedData = localStorage.getItem('salaryData');
-        if (storedData) {
-            salaryData = JSON.parse(storedData);
-        }
-    } catch (e) {
-        console.error("Error reading salaryData from localStorage:", e);
-    }
+    display.innerHTML = '';
 
     // Create form container
     var formContainer = document.createElement("div");
@@ -154,14 +186,9 @@ button:hover {
     var formTitle = document.createElement("h3");
     formTitle.innerText = "Financial Request Form";
     formTitle.style.textAlign = "center";
-    formTitle.style.marginBottom = "20px";
-    formTitle.style.color = "#333";
     formContainer.appendChild(formTitle);
 
     // Date input
-    var dateContainer = document.createElement("div");
-    dateContainer.style.marginBottom = "15px";
-    
     var dateLabel = document.createElement("label");
     dateLabel.innerText = "Date: ";
     dateLabel.style.marginRight = "10px";
@@ -172,202 +199,354 @@ button:hover {
     dateInput.style.padding = "5px";
     dateInput.style.borderRadius = "4px";
     dateInput.style.border = "1px solid #ddd";
+    dateInput.required = true;
+    dateInput.value = new Date().toISOString().split('T')[0]; // Default to today
     
+    var dateContainer = document.createElement("div");
+    dateContainer.style.marginBottom = "15px";
     dateContainer.appendChild(dateLabel);
     dateContainer.appendChild(dateInput);
     formContainer.appendChild(dateContainer);
 
-    // Checkbox options
+    // Create option buttons container
     var optionsContainer = document.createElement("div");
-    optionsContainer.style.marginBottom = "20px";
-    
-    function createCheckboxOption(label, value, currentValue) {
-        var optionDiv = document.createElement("div");
-        optionDiv.style.marginBottom = "8px";
-        
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.value = value;
-        checkbox.id = value + "-checkbox";
-        checkbox.style.marginRight = "10px";
-        
-        var labelElement = document.createElement("label");
-        labelElement.htmlFor = value + "-checkbox";
-        labelElement.innerHTML = `${label}: <strong>${currentValue}</strong>`;
-        
-        optionDiv.appendChild(checkbox);
-        optionDiv.appendChild(labelElement);
-        optionsContainer.appendChild(optionDiv);
-    }
-    
-    createCheckboxOption("Allowance", "allowance", salaryData.allowance);
-    createCheckboxOption("Project Cap", "project", salaryData.project || salaryData.cap || 0);
-    createCheckboxOption("Salary", "salary", salaryData.salary);
-    createCheckboxOption("Stipend", "stipend", salaryData.stipend);
-    
+    optionsContainer.className = "options-container";
     formContainer.appendChild(optionsContainer);
 
-    // Amount requested
-    var amountContainer = document.createElement("div");
-    amountContainer.style.marginBottom = "20px";
-    
-    var amountLabel = document.createElement("label");
-    amountLabel.innerText = "Amount Requested: ";
-    amountLabel.style.fontWeight = "bold";
-    amountLabel.style.marginRight = "10px";
-    
-    var amountInput = document.createElement("input");
-    amountInput.type = "number";
-    amountInput.placeholder = "Enter amount";
-    amountInput.style.padding = "5px";
-    amountInput.style.borderRadius = "4px";
-    amountInput.style.border = "1px solid #ddd";
-    amountInput.style.width = "150px";
-    
-    amountContainer.appendChild(amountLabel);
-    amountContainer.appendChild(amountInput);
-    formContainer.appendChild(amountContainer);
+    // Salary data with proper project cap handling
+    var salaryData = JSON.parse(localStorage.getItem('salaryData')) || {
+        "salary": 94,
+        "allowance": 0,
+        "project": 0,
+        "cap": 0,
+        "stipend": 0
+    };
 
-    // Remainder section
-    var remainderContainer = document.createElement("div");
-    remainderContainer.style.marginTop = "25px";
-    remainderContainer.style.paddingTop = "15px";
-    remainderContainer.style.borderTop = "1px solid #ccc";
-    
-    var remainderTitle = document.createElement("h4");
-    remainderTitle.innerText = "Remainder";
-    remainderTitle.style.marginBottom = "15px";
-    remainderTitle.style.color = "#555";
-    remainderContainer.appendChild(remainderTitle);
-    
-    function createRemainderItem(label, value) {
-        var itemDiv = document.createElement("div");
-        itemDiv.style.marginBottom = "8px";
+    // Add financial option buttons
+    ["Salary", "Allowance", "Project Cap", "Stipend"].forEach(type => {
+        var btn = document.createElement("button");
+        btn.className = "optionButton";
         
-        var labelSpan = document.createElement("span");
-        labelSpan.innerText = label + ": ";
-        labelSpan.style.fontWeight = "bold";
-        labelSpan.style.marginRight = "5px";
+        // Handle "Project Cap" special case
+        var valueKey = type.toLowerCase().replace(" ", "");
+        var displayValue = salaryData[valueKey] !== undefined ? salaryData[valueKey] : 
+                         (type === "Project Cap" && salaryData["cap"] !== undefined) ? salaryData["cap"] : 0;
         
-        var valueSpan = document.createElement("span");
-        valueSpan.innerText = value;
+        btn.innerText = `${type}: $${displayValue}`;
         
-        itemDiv.appendChild(labelSpan);
-        itemDiv.appendChild(valueSpan);
-        remainderContainer.appendChild(itemDiv);
+        // Make Salary button non-functional without visual changes
+        if (type !== "Salary") {
+            btn.onclick = function() {
+                this.classList.toggle("active");
+                toggleInputField(this, type);
+            };
+        }
+        
+        optionsContainer.appendChild(btn);
+    });
+
+    // Bill button
+    var billBtn = document.createElement("button");
+    billBtn.className = "reasonButton";
+    billBtn.innerText = "Bill";
+    billBtn.onclick = function() {
+        this.classList.toggle("active");
+        toggleBillSelection(this);
+    };
+    formContainer.appendChild(billBtn);
+
+    // Main submit button (YELLOW)
+    var submitButton = document.createElement("button");
+    submitButton.innerText = "Submit";
+    submitButton.style.backgroundColor = "#FFD700";
+    submitButton.style.color = "black";
+    submitButton.style.border = "none";
+    submitButton.style.borderRadius = "4px";
+    submitButton.style.padding = "10px 20px";
+    submitButton.style.cursor = "pointer";
+    submitButton.style.width = "200px";
+    submitButton.style.display = "block";
+    submitButton.style.margin = "20px auto";
+    submitButton.onclick = submitFinancialRequest;
+    formContainer.appendChild(submitButton);
+}
+
+function toggleInputField(button, type) {
+    var inputDiv = document.getElementById(`${type.replace(" ", "")}InputDiv`);
+    if (inputDiv) {
+        if (inputDiv.querySelector('.change-btn')) {
+            // If already saved, get current amount and revert to edit mode
+            var currentAmount = inputDiv.querySelector('span').textContent.match(/\$([\d,]+)/)[1];
+            inputDiv.innerHTML = '';
+            
+            var input = document.createElement("input");
+            input.type = "number";
+            input.value = currentAmount.replace(/,/g, '');
+            input.style.marginRight = "5px";
+            
+            var saveBtn = createYellowButton("Save", function() {
+                if (!input.value) {
+                    alert("Please enter an amount");
+                    return;
+                }
+                showSavedRequest(inputDiv, type, input.value);
+            });
+            
+            inputDiv.appendChild(input);
+            inputDiv.appendChild(saveBtn);
+        } else {
+            inputDiv.remove();
+        }
+        return;
     }
-    
-    createRemainderItem("Salary", salaryData.salary);
-    createRemainderItem("Allowance", salaryData.allowance);
-    createRemainderItem("Project Cap", salaryData.project || salaryData.cap || 0);
-    
-    formContainer.appendChild(remainderContainer);
 
-    // Question section
-    var questionContainer = document.createElement("div");
-    questionContainer.style.marginTop = "25px";
-    questionContainer.style.paddingTop = "15px";
-    questionContainer.style.borderTop = "1px solid #ccc";
+    // Create new input field
+    var div = document.createElement("div");
+    div.id = `${type.replace(" ", "")}InputDiv`;
     
-    var questionText = document.createElement("p");
-    questionText.innerText = "Is the level of return appropriate for the requested amount?";
-    questionText.style.fontWeight = "bold";
-    questionText.style.marginBottom = "15px";
-    questionContainer.appendChild(questionText);
+    var input = document.createElement("input");
+    input.type = "number";
+    input.placeholder = "Enter amount";
+    input.style.marginRight = "5px";
     
-    var responseDiv = document.createElement("div");
-    responseDiv.innerText = "X"; // Placeholder for response
-    responseDiv.style.color = "#666";
-    questionContainer.appendChild(responseDiv);
-    
-    formContainer.appendChild(questionContainer);
+    var saveBtn = createYellowButton("Save", function() {
+        if (!input.value) {
+            alert("Please enter an amount");
+            return;
+        }
+        showSavedRequest(div, type, input.value);
+    });
 
-    // Add some CSS directly for this form
-    var style = document.createElement("style");
-    style.textContent = `
-        .financial-form {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .financial-form input[type="checkbox"] {
-            transform: scale(1.2);
-        }
-        
-        .financial-form label {
+    div.appendChild(input);
+    div.appendChild(saveBtn);
+    button.parentNode.insertBefore(div, button.nextSibling);
+}
+
+function showSavedRequest(container, type, amount) {
+    // Format amount with commas
+    var formattedAmount = parseFloat(amount).toLocaleString('en-US');
+    
+    container.innerHTML = `
+        <span style="margin-right:10px;">Requesting $${formattedAmount} from ${type}</span>
+        <button class="change-btn" style="
+            background-color: #FFD700;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
             cursor: pointer;
-        }
+            width: 100px;
+            margin-left: 5px;
+        ">Change</button>
     `;
-    display.appendChild(style);
-}
+    
+    // Add click handler for the change button
+    container.querySelector('.change-btn').onclick = function() {
+        // Revert back to input field
+        container.innerHTML = '';
+        var input = document.createElement("input");
+        input.type = "number";
+        input.value = amount;
+        input.style.marginRight = "5px";
         
-       function deposit() {
-  var display = document.getElementById("display");
-  display.innerHTML = "";
-
-  var title = document.createElement("h3");
-  title.innerText = "deposit slip";
-  title.className = "depositTitle";
-  display.appendChild(title);
-
-  var formGroup = document.createElement("div");
-  formGroup.className = "formGroup";
-  display.appendChild(formGroup);
-
-  var nameName = document.createElement("span");
-  nameName.className = "nameName";
-  nameName.innerText = "name";
-  formGroup.appendChild(nameName);
-
-  var nameValue = document.createElement("span");
-  nameValue.className = "nameValue";
-  nameValue.innerText = "X";
-  formGroup.appendChild(nameValue);
-
-  var accFrom = document.createElement("span");
-  accFrom.className = "accFrom";
-  accFrom.innerText = "from acc";
-  formGroup.appendChild(accFrom);
-
-  var accValue = document.createElement("span");
-  accValue.className = "accValue";
-  accValue.innerText = "X";
-  formGroup.appendChild(accValue);
-
-  var accTo = document.createElement("span");
-  accTo.className = "accTo";
-  accTo.innerText = "to acc";
-  formGroup.appendChild(accTo);
-
-  var accToValue = document.createElement("span");
-  accToValue.className = "accToValue";
-  accToValue.innerText = "X";
-  formGroup.appendChild(accToValue);
-
-  var border = document.createElement("div");
-  border.className = "border";
-  display.appendChild(border);
-
-  var displayd = document.createElement("div");
-  displayd.className = "displayd";
-  display.appendChild(displayd);
-
-  var date = document.createElement("input");
-  date.type = "date";
-  displayd.appendChild(date);
-
-  var total = document.createElement("input");
-  total.placeholder = "deposit amount";
-  displayd.appendChild(total);
-
-  var source = document.createElement("input");
-  source.placeholder = "source";
-  displayd.appendChild(source);
+        var saveBtn = createYellowButton("Save", function() {
+            if (!input.value) {
+                alert("Please enter an amount");
+                return;
+            }
+            showSavedRequest(container, type, input.value);
+        });
+        
+        container.appendChild(input);
+        container.appendChild(saveBtn);
+    };
 }
-      </script>
+
+function toggleBillSelection(button) {
+    var billDisplay = document.getElementById("billDisplay");
+    if (billDisplay) {
+        if (billDisplay.querySelector('.change-btn')) {
+            // Revert to selection state
+            billDisplay.innerHTML = '';
+            setupBillSelection(billDisplay, button);
+        } else {
+            billDisplay.remove();
+        }
+        return;
+    }
+
+    billDisplay = document.createElement("div");
+    billDisplay.id = "billDisplay";
+    setupBillSelection(billDisplay, button);
+    button.parentNode.insertBefore(billDisplay, button.nextSibling);
+}
+
+function setupBillSelection(container, button) {
+    try {
+        var expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        var bills = expenses.filter(b => b.billname);
+        
+        if (bills.length === 0) {
+            container.innerHTML = "<p>No bills found</p>";
+        } else {
+            bills.forEach(bill => {
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.dataset.billId = bill.count;
+                checkbox.id = `bill_${bill.count}`;
+                
+                var label = document.createElement("label");
+                label.htmlFor = `bill_${bill.count}`;
+                label.innerHTML = bill.billname;
+                label.style.marginLeft = "5px";
+                
+                var billItem = document.createElement("div");
+                billItem.style.marginBottom = "5px";
+                billItem.appendChild(checkbox);
+                billItem.appendChild(label);
+                container.appendChild(billItem);
+            });
+            
+            var saveBtn = createYellowButton("Save Bills", function() {
+                const selected = [];
+                container.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+                    selected.push(cb.dataset.billId);
+                });
+                
+                if (selected.length > 0) {
+                    container.innerHTML = `
+                        <span style="margin-right:10px;">${selected.length} bills selected</span>
+                        <button class="change-btn" style="
+                            background-color: #FFD700;
+                            color: black;
+                            border: none;
+                            border-radius: 4px;
+                            padding: 5px 10px;
+                            cursor: pointer;
+                            width: 100px;
+                            margin-left: 5px;
+                        ">Change</button>
+                    `;
+                    
+                    // Add click handler for the change button
+                    container.querySelector('.change-btn').onclick = function() {
+                        setupBillSelection(container, button);
+                    };
+                } else {
+                    alert("Please select at least one bill");
+                }
+            });
+            
+            container.appendChild(saveBtn);
+        }
+    } catch (e) {
+        console.error("Error loading bills:", e);
+        container.innerHTML = "<p>Error loading bills</p>";
+    }
+}
+
+function createYellowButton(text, onClick) {
+    var btn = document.createElement("button");
+    btn.innerText = text;
+    btn.style.backgroundColor = "#FFD700";
+    btn.style.color = "black";
+    btn.style.border = "none";
+    btn.style.borderRadius = "4px";
+    btn.style.padding = "5px 10px";
+    btn.style.cursor = "pointer";
+    btn.style.width = "100px";
+    btn.style.marginLeft = "5px";
+    btn.onclick = onClick;
+    return btn;
+}
+
+function submitFinancialRequest() {
+    const date = document.querySelector('input[type="date"]').value;
+    if (!date) {
+        alert("Please select a date");
+        return;
+    }
+
+    // Create unique key for each request (date + timestamp)
+    const timestamp = new Date().getTime();
+    const storageKey = `${date}_${timestamp}_financialRequest`;
+    
+    // Collect all data
+    const requestData = {
+        date: date,
+        timestamp: timestamp,
+        requests: [],
+        billIds: []
+    };
+
+    // Get amounts from each input div
+    ["Allowance", "ProjectCap", "Stipend"].forEach(type => {
+        const div = document.getElementById(`${type}InputDiv`);
+        if (div && div.querySelector('span')) {
+            const amount = div.querySelector('span').textContent.match(/\$([\d,]+)/)[1].replace(/,/g, '');
+            if (amount) {
+                requestData.requests.push({
+                    type: type,
+                    amount: amount
+                });
+            }
+        }
+    });
+
+    // Get selected bills
+    const billDisplay = document.getElementById("billDisplay");
+    if (billDisplay && billDisplay.querySelector('span')) {
+        const checkboxes = billDisplay.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach(cb => {
+            requestData.billIds.push(cb.dataset.billId);
+        });
+    }
+
+    // Validate at least one request was made
+    if (requestData.requests.length === 0 && requestData.billIds.length === 0) {
+        alert("Please make at least one request before submitting");
+        return;
+    }
+
+    // Debug: Show what we're about to save
+    console.log("Saving financial request:", storageKey, requestData);
+
+    try {
+        // Save to localStorage
+        localStorage.setItem(storageKey, JSON.stringify(requestData));
+        
+        // Verify it was saved correctly
+        const savedItem = localStorage.getItem(storageKey);
+        if (!savedItem) {
+            throw new Error("Failed to save - item not found in localStorage after saving");
+        }
+        
+        // Test if we can parse it back (valid JSON)
+        const parsedItem = JSON.parse(savedItem);
+        console.log("Successfully saved and verified:", parsedItem);
+        
+        alert("Financial request submitted successfully!\nKey: " + storageKey);
+    } catch (e) {
+        console.error("Save failed:", e);
+        alert("Failed to save request: " + e.message);
+        return; // Exit if save failed
+    }
+
+    // Clear form on success
+    document.getElementById("display").innerHTML = '';
+    financial(); // Reload the financial form
+}
+
+// Function to view all saved requests (for testing)
+function viewAllFinancialRequests() {
+    console.log("All Financial Requests in localStorage:");
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.includes('_financialRequest')) {
+            console.log(key, JSON.parse(localStorage.getItem(key)));
+        }
+    }
+}
+    </script>
   </body>
 </html>
