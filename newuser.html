@@ -353,6 +353,9 @@
   
   // Save expense data - ENSURE COUNT IS ALWAYS INCLUDED
   let expenses = JSON.parse(localStorage.getItem('expenses'));
+if (!Array.isArray(expenses)) {
+  expenses = [];
+}
   const newExpense = {
     count, // This is the critical line - always include count
     billname: billName,

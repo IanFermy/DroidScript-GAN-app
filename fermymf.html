@@ -29,25 +29,140 @@
     }
     label { display: inline-block; width: 150px; color: black; }
     .line { height: 2px; background: black; margin: 10px 0; }
+    
+    /* Expense Area Styles */
     .expenseArea {
-      position: absolute; 
+      position: absolute;
       top: 280px;
-      margin: 20px; 
-      padding: 15px;
-      background-color: rgba(255,255,255,0.9);
-      border-radius: 8px; 
-      color: black; 
+      margin: 20px;
+      padding: 20px;
+      background-color: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      color: black;
       display: none;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      width: 80%;
-      max-width: 600px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      width: 85%;
+      max-width: 650px;
+      z-index: 100;
     }
+    
+    .expense-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .expense-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .expense-close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #666;
+      padding: 5px;
+    }
+    
+    .expense-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    
     .expense-item {
-      margin-bottom: 8px; 
-      padding: 8px;
-      background-color: rgba(0,0,0,0.1);
-      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      transition: all 0.2s ease;
     }
+    
+    .expense-item:hover {
+      background-color: #e9ecef;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .expense-info {
+      flex: 1;
+    }
+    
+    .expense-name {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 3px;
+    }
+    
+    .expense-frequency {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+    
+    .expense-amount {
+      font-weight: bold;
+      color: #dc3545;
+      min-width: 80px;
+      text-align: right;
+    }
+    
+    .no-expenses {
+      text-align: center;
+      padding: 30px;
+      color: #6c757d;
+      font-style: italic;
+    }
+    
+    .expense-summary {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #e0e0e0;
+      font-weight: bold;
+    }
+    
+    .expense-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    
+    .total-label {
+      color: #495057;
+    }
+    
+    .total-amount {
+      color: #212529;
+    }
+    
+    /* Scrollbar styling */
+    .expense-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .expense-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+    
+    .expense-list::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 3px;
+    }
+    
+    .expense-list::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    
     button.expenses {
       background: #4CAF50; 
       color: white;
@@ -143,17 +258,6 @@
       display: inline-block;
       margin-right: 10px;
     }
-    .expense-close-btn {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      background: none;
-      border: none;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      color: black;
-    }
   </style>
 </head>
 <body>
@@ -197,6 +301,156 @@
 <script>
   let display = null;
 
+  // Helper functions
+  function safeParse(data) {
+    try { return data ? JSON.parse(data) : null; } 
+    catch (e) { return null; }
+  }
+
+  function findUser(array, count) {
+    return Array.isArray(array) ? array.find(item => item.count === count) : null;
+  }
+
+  function validateNumber(value, fallback = 0) {
+    const num = parseFloat(value);
+    return isNaN(num) ? fallback : num;
+  }
+
+  function showLoadingState(show) {
+    document.querySelectorAll('[id="salary"], [id="allowance"], [id="stipend"], [id="project"]')
+      .forEach(el => {
+        el.textContent = show ? 'Loading...' : '$0';
+      });
+  }
+
+  function initStorageDefaults() {
+    // Initialize salaryData with proper structure if it doesn't exist
+    if (!localStorage.getItem('salaryData')) {
+        localStorage.setItem('salaryData', JSON.stringify({
+            salary: 0,
+            allowance: 0,
+            stipend: 0,
+            project: 0
+        }));
+    } else {
+        // Ensure existing data has all required fields
+        const existingData = JSON.parse(localStorage.getItem('salaryData'));
+        const defaultData = {
+            salary: 0,
+            allowance: 0,
+            stipend: 0,
+            project: 0
+        };
+        localStorage.setItem('salaryData', JSON.stringify({
+            ...defaultData,
+            ...existingData
+        }));
+    }
+    
+    if (!localStorage.getItem('extrasData')) {
+        localStorage.setItem('extrasData', JSON.stringify({
+            travelValue: '0',
+            foodValue: '0',
+            extraValue: '0'
+        }));
+    }
+}
+
+  function handleErrors() {
+    const fallbacks = {
+      salary: 0,
+      allowance: 0,
+      stipend: 0,
+      project: 0,
+      travel: 0,
+      food: 0,
+      extra: 0,
+      bills: 0,
+      addextra: 0,
+      addbonus: 0,
+      daily: 0,
+      weekly: 0
+    };
+    
+    Object.entries(fallbacks).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el && el.textContent === 'Loading...') {
+        el.textContent = `$${value}`;
+      }
+    });
+  }
+
+  function populateExtrasData(data) {
+    const defaults = { travelValue: '0', foodValue: '0', extraValue: '0' };
+    const merged = data ? {...defaults, ...data} : defaults;
+    
+    document.getElementById('travel').textContent = `$${merged.travelValue}`;
+    document.getElementById('food').textContent = `$${merged.foodValue}`;
+    document.getElementById('extra').textContent = `$${merged.extraValue}`;
+  }
+
+  function calculateTotalExpenses() {
+    try {
+        // Clear any cached calculations
+        localStorage.removeItem('monthlyExpenses');
+        
+        // Get fresh data
+        const expenses = safeParse(localStorage.getItem('expenses')) || [];
+        const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
+        
+        // Filter expenses for current user
+        const userExpenses = expenses.filter(exp => exp.count === 0);
+        
+        // Calculate base total
+        const baseTotal = userExpenses.reduce((sum, exp) => sum + validateNumber(exp.billamt), 0);
+        
+        // Calculate extras
+        const travel = validateNumber(extrasData.travelValue);
+        const food = validateNumber(extrasData.foodValue);
+        const extra = validateNumber(extrasData.extraValue);
+        const totalWithExtras = baseTotal + travel + food + extra;
+        
+        // Calculate bonus (original + half)
+        const bonusValue = totalWithExtras + (totalWithExtras / 2);
+        
+        // Calculate goals
+        const daily = (bonusValue / 42).toFixed(2);
+        const weekly = (bonusValue / 6).toFixed(2);
+        
+        // Update UI immediately
+        updateFinancialUI({
+            bills: baseTotal,
+            addextra: totalWithExtras,
+            addbonus: bonusValue,
+            daily,
+            weekly
+        });
+        
+        // Save for persistence
+        localStorage.setItem('monthlyExpenses', JSON.stringify({
+            bills: baseTotal,
+            addextra: totalWithExtras,
+            addbonus: bonusValue,
+            daily,
+            weekly,
+            count: 0
+        }));
+        
+        return baseTotal;
+    } catch (error) {
+        console.error("Error in calculateTotalExpenses:", error);
+        return 0;
+    }
+  }
+
+  function updateFinancialUI(data) {
+    document.getElementById('bills').textContent = `$${data.bills.toFixed(2)}`;
+    document.getElementById('addextra').textContent = `$${data.addextra.toFixed(2)}`;
+    document.getElementById('addbonus').textContent = `$${data.addbonus.toFixed(2)}`;
+    document.getElementById('daily').textContent = `$${data.daily}`;
+    document.getElementById('weekly').textContent = `$${data.weekly}`;
+  }
+
   function edit() {
     const displayDiv = document.getElementById('extrasDisplay');
     if (displayDiv.style.display === 'none' || !displayDiv.style.display) {
@@ -208,11 +462,13 @@
 
   function createEditForm() {
     display = document.getElementById('extrasDisplay');
+    const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
+    
     display.innerHTML = `
       <button class="close-btn" onclick="edit()">×</button>
-      <div><label>Travel allowance:</label><input type="text" id="travelInput"></div>
-      <div><label>Food allowance:</label><input type="text" id="foodInput"></div>
-      <div><label>Extra allowance:</label><input type="text" id="extraInput"></div>
+      <div><label>Travel allowance:</label><input type="text" id="travelInput" value="${extrasData.travelValue || '0'}"></div>
+      <div><label>Food allowance:</label><input type="text" id="foodInput" value="${extrasData.foodValue || '0'}"></div>
+      <div><label>Extra allowance:</label><input type="text" id="extraInput" value="${extrasData.extraValue || '0'}"></div>
       <button onclick="sendUpdate()">Update</button>
     `;
     display.style.display = "block";
@@ -256,9 +512,9 @@
     const withExtra = document.getElementById('edit-with-extra').value;
     const withBonus = document.getElementById('edit-with-bonus').value;
 
-    if (billTotal) document.getElementById('bills').textContent = `$${billTotal}`;
-    if (withExtra) document.getElementById('addextra').textContent = `$${withExtra}`;
-    if (withBonus) document.getElementById('addbonus').textContent = `$${withBonus}`;
+    if (billTotal) document.getElementById('bills').textContent = `$${validateNumber(billTotal).toFixed(2)}`;
+    if (withExtra) document.getElementById('addextra').textContent = `$${validateNumber(withExtra).toFixed(2)}`;
+    if (withBonus) document.getElementById('addbonus').textContent = `$${validateNumber(withBonus).toFixed(2)}`;
 
     calculateTotalExpenses();
     document.getElementById('totalsDisplay').style.display = "none";
@@ -280,193 +536,222 @@
   function showExpenses() {
     const expenses = safeParse(localStorage.getItem('expenses')) || [];
     const expenseArea = document.getElementById('expenseArea');
-    expenseArea.innerHTML = '';
-
-    // Add close button at the top
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = '×';
-    closeBtn.className = 'expense-close-btn';
-    closeBtn.onclick = toggleExpenses;
-    expenseArea.appendChild(closeBtn);
-
+    const users = safeParse(localStorage.getItem('users')) || [];
+    const username = findUser(users, 0)?.username || 'User';
+    
+    expenseArea.innerHTML = `
+      <div class="expense-header">
+        <div class="expense-title">Expenses for ${username}</div>
+        <button class="expense-close-btn" onclick="toggleExpenses()">×</button>
+      </div>
+      <div class="expense-list" id="expenseList"></div>
+      <div class="expense-summary" id="expenseSummary"></div>
+    `;
+    
+    const expenseList = document.getElementById('expenseList');
+    const expenseSummary = document.getElementById('expenseSummary');
     const userExpenses = expenses.filter(exp => exp.count === 0);
-
+    
     if (userExpenses.length === 0) {
-      const noExpenses = document.createElement('p');
-      noExpenses.textContent = 'No expenses found';
-      expenseArea.appendChild(noExpenses);
+      expenseList.innerHTML = `
+        <div class="no-expenses">
+          No expenses found. Add some to see them here.
+        </div>
+      `;
       calculateTotalExpenses();
       return;
     }
-
-    const header = document.createElement('h3');
-    header.textContent = 'Expenses for ' + (safeParse(localStorage.getItem('users'))?.find(u => u.count === 0)?.username || 'User');
-    expenseArea.appendChild(header);
-
+    
+    let totalAmount = 0;
+    let monthlyTotal = 0;
+    let yearlyTotal = 0;
+    
     userExpenses.forEach(exp => {
+      const amt = validateNumber(exp.billamt);
+      totalAmount += amt;
+      
+      // Calculate monthly equivalent
+      if (exp.due === 'monthly') {
+        monthlyTotal += amt;
+        yearlyTotal += amt * 12;
+      } else if (exp.due === 'yearly') {
+        monthlyTotal += amt / 12;
+        yearlyTotal += amt;
+      } else if (exp.due === 'weekly') {
+        monthlyTotal += amt * 4.33;
+        yearlyTotal += amt * 52;
+      } else if (exp.due === 'daily') {
+        monthlyTotal += amt * 30;
+        yearlyTotal += amt * 365;
+      }
+      
       const item = document.createElement('div');
       item.className = 'expense-item';
-      const amt = parseFloat(exp.billamt);
       item.innerHTML = `
-        <strong>${exp.billname || 'Unnamed Bill'}</strong><br>
-        Amount: $${isNaN(amt) ? 'N/A' : amt.toFixed(2)}<br>
-        Frequency: ${exp.due || 'Not specified'}
+        <div class="expense-info">
+          <div class="expense-name">${exp.billname || 'Unnamed Bill'}</div>
+          <div class="expense-frequency">${exp.due ? capitalizeFirstLetter(exp.due) : 'Not specified'}</div>
+        </div>
+        <div class="expense-amount">$${amt.toFixed(2)}</div>
       `;
-      expenseArea.appendChild(item);
+      expenseList.appendChild(item);
     });
-
+    
+    // Add summary section
+    expenseSummary.innerHTML = `
+      <div class="expense-total">
+        <span class="total-label">Total Amount:</span>
+        <span class="total-amount">$${totalAmount.toFixed(2)}</span>
+      </div>
+      <div class="expense-total">
+        <span class="total-label">Monthly Equivalent:</span>
+        <span class="total-amount">$${monthlyTotal.toFixed(2)}</span>
+      </div>
+      <div class="expense-total">
+        <span class="total-label">Yearly Equivalent:</span>
+        <span class="total-amount">$${yearlyTotal.toFixed(2)}</span>
+      </div>
+    `;
+    
     calculateTotalExpenses();
   }
 
-  function safeParse(data) {
-    try { return data ? JSON.parse(data) : null; } 
-    catch (e) { return null; }
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  function findUser(array, count) {
-    return Array.isArray(array) ? array.find(item => item.count === count) : null;
-  }
-
-  function setDefaultValues() {
-    [
-      '#salary', '#stipend', '#allowance', '#project', 
-      '#bills', '#addextra', '#addbonus', '#daily', '#weekly'
-    ].forEach(selector => {
-      const el = document.querySelector(selector);
-      if (el) el.textContent = '$0';
-    });
-  }
-
-  function populateExtrasData(data) {
-    if (!data) return;
-    document.getElementById('travel').textContent = `$${data.travelValue || '0'}`;
-    document.getElementById('food').textContent = `$${data.foodValue || '0'}`;
-    document.getElementById('extra').textContent = `$${data.extraValue || '0'}`;
-  }
-
-  function handleErrors() {
-    document.querySelectorAll('span').forEach(el => {
-      if (el.textContent === 'Loading...') el.textContent = 'Not available';
-    });
-  }
-
-  function calculateTotalExpenses() {
-    const expenses = safeParse(localStorage.getItem('expenses')) || [];
-    const total = expenses.filter(exp => exp.count === 0).reduce((sum, e) => {
-      const amt = parseFloat(e.billamt);
-      return sum + (isNaN(amt) ? 0 : amt);
-    }, 0);
-    document.getElementById('bills').textContent = `$${total.toFixed(2)}`;
-
-    const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
-    const travel = parseFloat(extrasData.travelValue) || 0;
-    const food = parseFloat(extrasData.foodValue) || 0;
-    const extra = parseFloat(extrasData.extraValue) || 0;
-
-    const totalWithExtras = total + travel + food + extra;
-    document.getElementById('addextra').textContent = `$${totalWithExtras.toFixed(2)}`;
-
-    const bonusValue = totalWithExtras / 0.5;
-    document.getElementById('addbonus').textContent = `$${bonusValue.toFixed(2)}`;
-
-    const daily = parseFloat((bonusValue / 42).toFixed(2));
-    const weekly = parseFloat((bonusValue / 7).toFixed(2));
-
-    document.getElementById('daily').textContent = `$${daily}`;
-    document.getElementById('weekly').textContent = `$${weekly}`;
-
-    const monthlyExpenses = {
-      travel, food, extra,
-      bills: total,
-      addextra: totalWithExtras,
-      addbonus: bonusValue,
-      daily, weekly,
-      count: 0
+function editSalaryGroup() {
+    const currentData = JSON.parse(localStorage.getItem('salaryData')) || {
+        salary: 0,
+        allowance: 0,
+        stipend: 0,
+        project: 0
     };
 
-    localStorage.setItem('monthlyExpenses', JSON.stringify(monthlyExpenses));
+    // Create a modal form for better UX
+    const modalHtml = `
+        <div id="salaryEditModal" style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+        ">
+            <h3>Edit Salary Group</h3>
+            <div style="margin: 10px 0;">
+                <label>Salary: </label>
+                <input type="number" id="editSalaryValue" value="${currentData.salary}" style="padding: 5px;">
+            </div>
+            <div style="margin: 10px 0;">
+                <label>Stipend: </label>
+                <input type="number" id="editStipendValue" value="${currentData.stipend}" style="padding: 5px;">
+            </div>
+            <div style="margin: 10px 0;">
+                <label>Allowance: </label>
+                <input type="number" id="editAllowanceValue" value="${currentData.allowance}" style="padding: 5px;">
+            </div>
+            <div style="margin: 10px 0;">
+                <label>Project Cap: </label>
+                <input type="number" id="editProjectValue" value="${currentData.project}" style="padding: 5px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button onclick="document.getElementById('salaryEditModal').remove()" style="padding: 5px 10px;">Cancel</button>
+                <button onclick="saveSalaryChanges()" style="padding: 5px 10px; background: #4CAF50; color: white; border: none; border-radius: 4px;">Save</button>
+            </div>
+        </div>
+    `;
 
-    return total;
-  }
+    // Create and show modal
+    const modal = document.createElement('div');
+    modal.innerHTML = modalHtml;
+    document.body.appendChild(modal);
+}
 
-  function editSalaryGroup() {
-    const fields = ['salary', 'allowance', 'stipend', 'project'];
-    const currentData = JSON.parse(localStorage.getItem('salaryData')) || {
-      salary: 138,
+function saveSalaryChanges() {
+    // Get values from inputs
+    const newData = {
+        salary: validateNumber(document.getElementById('editSalaryValue').value),
+        stipend: validateNumber(document.getElementById('editStipendValue').value),
+        allowance: validateNumber(document.getElementById('editAllowanceValue').value),
+        project: validateNumber(document.getElementById('editProjectValue').value)
+    };
+
+    // Save to localStorage
+    localStorage.setItem('salaryData', JSON.stringify(newData));
+
+    // Update the displayed values
+    document.getElementById('salary').textContent = `$${newData.salary}`;
+    document.getElementById('stipend').textContent = `$${newData.stipend}`;
+    document.getElementById('allowance').textContent = `$${newData.allowance}`;
+    document.getElementById('project').textContent = `$${newData.project}`;
+
+    // Remove the modal
+    document.getElementById('salaryEditModal').remove();
+}
+
+  // Initialization
+  // Initialization
+document.addEventListener('DOMContentLoaded', function() {
+  showLoadingState(true);
+  
+  try {
+    initStorageDefaults();
+    
+    // Load all data
+    const users = safeParse(localStorage.getItem('users')) || [];
+    const classes = safeParse(localStorage.getItem('classes')) || [];
+    const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
+    
+    // Load salary data - this is the key change
+    const salaryData = safeParse(localStorage.getItem('salaryData')) || {
+      salary: 0,
       allowance: 0,
       stipend: 0,
       project: 0
     };
-
-    fields.forEach(field => {
-      const newValue = prompt(`Enter new ${field} value:`, currentData[field] || 0);
-      if (newValue !== null && !isNaN(parseFloat(newValue))) {
-        currentData[field] = parseFloat(newValue);
-      }
-    });
-
-    localStorage.setItem('salaryData', JSON.stringify(currentData));
-
-    document.getElementById('salary').textContent = `$${currentData.salary}`;
-    document.getElementById('allowance').textContent = `$${currentData.allowance}`;
-    document.getElementById('stipend').textContent = `$${currentData.stipend}`;
-    document.getElementById('project').textContent = `$${currentData.project}`;
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    try {
-      // Load all data from localStorage
-      const users = safeParse(localStorage.getItem('users')) || [];
-      const classes = safeParse(localStorage.getItem('classes')) || [];
-      const extrasData = safeParse(localStorage.getItem('extrasData')) || {};
-      const monthlyExpenses = safeParse(localStorage.getItem('monthlyExpenses')) || {};
-      const expenses = safeParse(localStorage.getItem('expenses')) || [];
-
-      // Set user and class info
-      document.getElementById('name').textContent = `User: ${findUser(users, 0)?.username || 'Not set'}`;
-      document.getElementById('class').textContent = `Class: ${findUser(classes, 0)?.classname || 'Not set'}`;
-
-      // Initialize salaryData with default values if not present
-      if (!localStorage.getItem('salaryData')) {
-        const initialData = {
-          salary: 138,
-          allowance: 0,
-          stipend: 0,
-          project: 0
-        };
-        localStorage.setItem('salaryData', JSON.stringify(initialData));
-      }
-
-      // Load and display salary data
-      const salaryData = JSON.parse(localStorage.getItem('salaryData'));
-      document.getElementById('salary').textContent = `$${salaryData.salary}`;
-      document.getElementById('allowance').textContent = `$${salaryData.allowance}`;
-      document.getElementById('stipend').textContent = `$${salaryData.stipend}`;
-      document.getElementById('project').textContent = `$${salaryData.project}`;
-
-      // Set up edit salary button
-      document.getElementById('editSalaryBtn').addEventListener('click', editSalaryGroup);
-
-      // Load and display extras data
-      populateExtrasData(extrasData);
-
-      // Load and display monthly expenses if they exist
-      if (Object.keys(monthlyExpenses).length > 0) {
-        document.getElementById('bills').textContent = `$${monthlyExpenses.bills?.toFixed(2) || '0'}`;
-        document.getElementById('addextra').textContent = `$${monthlyExpenses.addextra?.toFixed(2) || '0'}`;
-        document.getElementById('addbonus').textContent = `$${monthlyExpenses.addbonus?.toFixed(2) || '0'}`;
-        document.getElementById('daily').textContent = `$${monthlyExpenses.daily || '0'}`;
-        document.getElementById('weekly').textContent = `$${monthlyExpenses.weekly || '0'}`;
-      } else if (expenses.length > 0) {
-        // Calculate totals if we have expenses but no monthly data
-        calculateTotalExpenses();
-      }
-
-    } catch (e) {
-      console.error('Error loading data:', e);
-      handleErrors();
+    
+    const monthlyExpenses = safeParse(localStorage.getItem('monthlyExpenses')) || {};
+    const expenses = safeParse(localStorage.getItem('expenses')) || [];
+    
+    // Set user and class info
+    document.getElementById('name').textContent = `User: ${findUser(users, 0)?.username || 'Not set'}`;
+    document.getElementById('class').textContent = `Class: ${findUser(classes, 0)?.classname || 'Not set'}`;
+    
+    // Load and display salary data - this is where we populate the fields
+    document.getElementById('salary').textContent = `$${salaryData.salary}`;
+    document.getElementById('allowance').textContent = `$${salaryData.allowance}`;
+    document.getElementById('stipend').textContent = `$${salaryData.stipend}`;
+    document.getElementById('project').textContent = `$${salaryData.project}`;
+    
+    // Set up edit salary button
+    document.getElementById('editSalaryBtn').addEventListener('click', editSalaryGroup);
+    
+    // Load and display extras data
+    populateExtrasData(extrasData);
+    
+    // Load and display monthly expenses if they exist
+    if (Object.keys(monthlyExpenses).length > 0) {
+      document.getElementById('bills').textContent = `$${monthlyExpenses.bills?.toFixed(2) || '0.00'}`;
+      document.getElementById('addextra').textContent = `$${monthlyExpenses.addextra?.toFixed(2) || '0.00'}`;
+      document.getElementById('addbonus').textContent = `$${monthlyExpenses.addbonus?.toFixed(2) || '0.00'}`;
+      document.getElementById('daily').textContent = `$${monthlyExpenses.daily || '0.00'}`;
+      document.getElementById('weekly').textContent = `$${monthlyExpenses.weekly || '0.00'}`;
+    } else if (expenses.length > 0) {
+      // Calculate totals if we have expenses but no monthly data
+      calculateTotalExpenses();
     }
-  });
+    
+  } catch (e) {
+    console.error('Error loading data:', e);
+    handleErrors();
+  } finally {
+    showLoadingState(false);
+  }
+});
 </script>
 </body>
 </html>
