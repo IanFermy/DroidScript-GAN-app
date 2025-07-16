@@ -172,6 +172,19 @@
       cursor: pointer;
       margin: 20px;
     }
+    
+    /* New gofish button styles */
+    button.gofish {
+      background: #ff4444;  /* Red color */
+      color: white;
+      border: none; 
+      padding: 10px 20px;
+      border-radius: 5px; 
+      cursor: pointer;
+      margin: 20px;
+      margin-top: 0; /* Remove top margin to sit right below expenses button */
+    }
+    
     span { color: black; }
     .back { height: 50px; width: 50px; }
     .editbtn {
@@ -276,6 +289,7 @@
       <button class="edit-salary-btn" id="editSalaryBtn">Edit Salary Group</button>
     </div>
     <button class="expenses" onclick="toggleExpenses()">Show Expenses</button>
+    <button class="gofish" onclick="window.location.href='gofish.html'">gofish</button> <!-- New gofish button -->
     <div class="expenseArea" id="expenseArea"></div>
     <div class="fishonly" id="fishonly">
       <h3 class="section-title">FISH only</h3>

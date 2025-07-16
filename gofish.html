@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fish Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f7fa;
+      color: #333;
+      min-width: 1200px; /* Wider page */
+    }
+    
+    .report-container {
+      max-width: none; /* Remove max-width constraint */
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .user-info {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .section-title {
+      font-size: 1.3em;
+      margin: 20px 0 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .week-container {
+      margin-bottom: 30px;
+    }
+    
+    .week-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+    
+    .day-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1em;
+    }
+    
+    .day-table th {
+      background-color: #f1f3f5;
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 2px solid #ddd;
+    }
+    
+    .day-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .day-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #777;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-container">
+    <div class="header">
+      <h1>Fish Report</h1>
+    </div>
+    
+    <div class="user-info">
+      User: Fermy
+    </div>
+    
+    <div class="section-title">
+      Weekly Financial Summary
+    </div>
+    
+    <div id="weeklyReport">
+      <div class="week-container">
+        <div class="week-header">Week 1</div>
+        <table class="day-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Income</th>
+              <th>Expenses</th>
+              <th>Net</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07/12 (Sat)</td>
+              <td>0.00</td>
+              <td>2.00</td>
+              <td>-2.00</td>
+              <td>Allowance</td>
+            </tr>
+            <tr>
+              <td>07/14 (Mon)</td>
+              <td>0.00</td>
+              <td>85.00</td>
+              <td>-85.00</td>
+              <td>Allowance</td>
+            </tr>
+            <tr>
+              <td>07/15 (Tue)</td>
+              <td>1.00</td>
+              <td>28.71</td>
+              <td>-27.71</td>
+              <td>domain.com</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="footer">
+      Last updated: 7/15/2025, 11:56:07 AM
+    </div>
+  </div>
+</body>
+</html>

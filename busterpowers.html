@@ -275,25 +275,9 @@ function toggleInputField(button, type) {
     var inputDiv = document.getElementById(`${type.replace(" ", "")}InputDiv`);
     if (inputDiv) {
         if (inputDiv.querySelector('.change-btn')) {
-            // If already saved, get current amount and revert to edit mode
-            var currentAmount = inputDiv.querySelector('span').textContent.match(/\$([\d,]+)/)[1];
-            inputDiv.innerHTML = '';
-            
-            var input = document.createElement("input");
-            input.type = "number";
-            input.value = currentAmount.replace(/,/g, '');
-            input.style.marginRight = "5px";
-            
-            var saveBtn = createYellowButton("Save", function() {
-                if (!input.value) {
-                    alert("Please enter an amount");
-                    return;
-                }
-                showSavedRequest(inputDiv, type, input.value);
-            });
-            
-            inputDiv.appendChild(input);
-            inputDiv.appendChild(saveBtn);
+            // If already saved, just remove the input div
+            inputDiv.remove();
+            button.classList.remove("active");
         } else {
             inputDiv.remove();
         }
@@ -342,23 +326,16 @@ function showSavedRequest(container, type, amount) {
     
     // Add click handler for the change button
     container.querySelector('.change-btn').onclick = function() {
-        // Revert back to input field
-        container.innerHTML = '';
-        var input = document.createElement("input");
-        input.type = "number";
-        input.value = amount;
-        input.style.marginRight = "5px";
+        // Remove the saved request div completely
+        container.remove();
         
-        var saveBtn = createYellowButton("Save", function() {
-            if (!input.value) {
-                alert("Please enter an amount");
-                return;
+        // Find and deactivate the corresponding button
+        const buttons = document.querySelectorAll('.optionButton');
+        buttons.forEach(btn => {
+            if (btn.textContent.includes(type)) {
+                btn.classList.remove('active');
             }
-            showSavedRequest(container, type, input.value);
         });
-        
-        container.appendChild(input);
-        container.appendChild(saveBtn);
     };
 }
 
@@ -371,6 +348,7 @@ function toggleBillSelection(button) {
             setupBillSelection(billDisplay, button);
         } else {
             billDisplay.remove();
+            button.classList.remove("active");
         }
         return;
     }
@@ -547,6 +525,136 @@ function viewAllFinancialRequests() {
         }
     }
 }
+// [Keep all your existing functions from financial() through viewAllFinancialRequests() here]
+
+// Add these deposit functions AFTER all the existing functions (not nested inside anything)
+function deposit() {
+    var display = document.getElementById("display");
+    display.innerHTML = '';
+
+    // Create form container
+    var formContainer = document.createElement("div");
+    formContainer.className = "financial-form";
+    display.appendChild(formContainer);
+
+    // Form title
+    var formTitle = document.createElement("h3");
+    formTitle.innerText = "Deposit Form";
+    formTitle.style.textAlign = "center";
+    formContainer.appendChild(formTitle);
+
+    // Date input
+    var dateLabel = document.createElement("label");
+    dateLabel.innerText = "Date: ";
+    dateLabel.style.marginRight = "10px";
+    dateLabel.style.fontWeight = "bold";
+    
+    var dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.style.padding = "5px";
+    dateInput.style.borderRadius = "4px";
+    dateInput.style.border = "1px solid #ddd";
+    dateInput.required = true;
+    dateInput.value = new Date().toISOString().split('T')[0];
+    
+    var dateContainer = document.createElement("div");
+    dateContainer.style.marginBottom = "15px";
+    dateContainer.appendChild(dateLabel);
+    dateContainer.appendChild(dateInput);
+    formContainer.appendChild(dateContainer);
+
+    // Amount input
+    var amountLabel = document.createElement("label");
+    amountLabel.innerText = "Amount: $";
+    amountLabel.style.marginRight = "10px";
+    amountLabel.style.fontWeight = "bold";
+    
+    var amountInput = document.createElement("input");
+    amountInput.type = "number";
+    amountInput.min = "0";
+    amountInput.step = "0.01";
+    amountInput.style.padding = "5px";
+    amountInput.style.borderRadius = "4px";
+    amountInput.style.border = "1px solid #ddd";
+    amountInput.required = true;
+    
+    var amountContainer = document.createElement("div");
+    amountContainer.style.marginBottom = "15px";
+    amountContainer.appendChild(amountLabel);
+    amountContainer.appendChild(amountInput);
+    formContainer.appendChild(amountContainer);
+
+    // Source input
+    var sourceLabel = document.createElement("label");
+    sourceLabel.innerText = "Source: ";
+    sourceLabel.style.marginRight = "10px";
+    sourceLabel.style.fontWeight = "bold";
+    
+    var sourceInput = document.createElement("input");
+    sourceInput.type = "text";
+    sourceInput.style.padding = "5px";
+    sourceInput.style.borderRadius = "4px";
+    sourceInput.style.border = "1px solid #ddd";
+    sourceInput.required = true;
+    sourceInput.placeholder = "e.g. Client Name, Bank Transfer";
+    
+    var sourceContainer = document.createElement("div");
+    sourceContainer.style.marginBottom = "20px";
+    sourceContainer.appendChild(sourceLabel);
+    sourceContainer.appendChild(sourceInput);
+    formContainer.appendChild(sourceContainer);
+
+    // Submit button (YELLOW)
+    var submitButton = document.createElement("button");
+    submitButton.innerText = "Submit Deposit";
+    submitButton.style.backgroundColor = "#FFD700";
+    submitButton.style.color = "black";
+    submitButton.style.border = "none";
+    submitButton.style.borderRadius = "4px";
+    submitButton.style.padding = "10px 20px";
+    submitButton.style.cursor = "pointer";
+    submitButton.style.width = "200px";
+    submitButton.style.display = "block";
+    submitButton.style.margin = "20px auto";
+    submitButton.onclick = function() {
+        submitDepositRequest(dateInput, amountInput, sourceInput);
+    };
+    formContainer.appendChild(submitButton);
+}
+
+function submitDepositRequest(dateInput, amountInput, sourceInput) {
+    // Get or initialize the deposits object
+    let deposits = JSON.parse(localStorage.getItem('depositRecords')) || {
+        journalId: localStorage.getItem('journalId') || 'journal_' + Date.now(),
+        entries: [],
+        meta: {
+            lastUpdated: new Date().toISOString(),
+            count: 0
+        }
+    };
+
+    // Create the deposit entry
+    const depositEntry = {
+        entryId: 'd_' + Date.now(),
+        date: dateInput.value,
+        amount: parseFloat(amountInput.value).toFixed(2),
+        source: sourceInput.value,
+        timestamp: new Date().toISOString(),
+        status: "recorded"
+    };
+
+    // Add to deposits and update metadata
+    deposits.entries.push(depositEntry);
+    deposits.meta.count = deposits.entries.length;
+    deposits.meta.lastUpdated = new Date().toISOString();
+
+    // Save back to localStorage
+    localStorage.setItem('depositRecords', JSON.stringify(deposits));
+    
+    alert(`Deposit recorded!\n$${depositEntry.amount} from ${depositEntry.source}`);
+    document.getElementById("display").innerHTML = '';
+}
+
     </script>
   </body>
 </html>
