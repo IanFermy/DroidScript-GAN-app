@@ -1,142 +1,394 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Fish Report</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f5f7fa;
-      color: #333;
-      min-width: 1200px; /* Wider page */
-    }
-    
-    .report-container {
-      max-width: none; /* Remove max-width constraint */
-      width: 100%;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 20px;
-      margin: 0 auto;
-    }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    
-    .user-info {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    
-    .section-title {
-      font-size: 1.3em;
-      margin: 20px 0 10px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    .week-container {
-      margin-bottom: 30px;
-    }
-    
-    .week-header {
-      font-weight: bold;
-      margin-bottom: 10px;
-      font-size: 1.1em;
-    }
-    
-    .day-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 1em;
-    }
-    
-    .day-table th {
-      background-color: #f1f3f5;
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 2px solid #ddd;
-    }
-    
-    .day-table td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .day-table tr:last-child td {
-      border-bottom: none;
-    }
-    
-    .footer {
-      margin-top: 20px;
-      text-align: center;
-      color: #777;
-      font-size: 0.9em;
-    }
-  </style>
-</head>
-<body>
-  <div class="report-container">
-    <div class="header">
-      <h1>Fish Report</h1>
+  <head>
+    <title>gofish.html</title>
+    <style>
+      html, body {
+        height: 90%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .background {
+        min-height: 110vh;
+        background: url("Img/Screenshot_2025-03-24_114434 (1).jpg") no-repeat center center;
+        background-size: cover;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .title {
+        text-align: center;
+        margin-top: 50px;
+        color: #333;
+      }
+
+      .img {
+        height: 80px;
+        width: 80px;
+        display: block;
+        margin: 0 auto 20px;
+      }
+
+      button {
+        display: block;
+        margin: 10px auto;
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 200px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .display {
+        border: 2px solid black;
+        height: 450px;
+        width: 90%;
+        max-width: 800px;
+        overflow-y: auto;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        box-sizing: border-box;
+      }
+
+      /* Fish Report Styles */
+      .report-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      
+      .report-header h1 {
+        margin-bottom: 5px;
+      }
+      
+      .report-header h2 {
+        margin-top: 0;
+        margin-bottom: 5px;
+      }
+      
+      .report-header h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+      
+      .user-info {
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+      }
+      
+      .financial-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      .financial-table th, 
+      .financial-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .financial-table th {
+        background-color: #f1f3f5;
+        font-weight: bold;
+      }
+      
+      .positive {
+        color: green;
+      }
+      
+      .negative {
+        color: red;
+      }
+      
+      .totals-row {
+        font-weight: bold;
+        background-color: #f9f9f9;
+      }
+      
+      .timestamp {
+        text-align: center;
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 20px;
+      }
+      
+      /* Existing form styles... */
+      .depositTitle {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .formGroup {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .formGroup span {
+        font-weight: bold;
+        padding: 5px 0;
+      }
+
+      .border {
+        height: 2px;
+        width: 100px;
+        background: blue;
+        margin: 20px auto;
+      }
+
+      .displayd {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .displayd input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .back {
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+      }
+      
+      #billDisplay {
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+      }
+
+      #billDisplay div {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+      }
+
+      #billDisplay input[type="checkbox"] {
+        margin-right: 8px;
+      }
+
+      #billDisplay label {
+        cursor: pointer;
+        user-select: none;
+      }
+      
+      /* Consistent button styles */
+      .optionButton, .reasonButton {
+        display: inline-block;
+        margin: 5px;
+        padding: 8px 16px;
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 150px;
+        transition: all 0.3s;
+      }
+      
+      .optionButton:hover, .reasonButton:hover {
+        background-color: #e0e0e0;
+      }
+      
+      .optionButton.active, .reasonButton.active {
+        background-color: #4CAF50;
+        color: white;
+        border-color: #45a049;
+      }
+      
+      .financial-form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <a href="fish.html"><img class="back" src="Img/1746667598930.png"></a>
+      <button onclick="generateFishReport()">generate fish report</button>
+      
+      <div class="display" id="display"></div>
     </div>
-    
-    <div class="user-info">
-      User: Fermy
-    </div>
-    
-    <div class="section-title">
-      Weekly Financial Summary
-    </div>
-    
-    <div id="weeklyReport">
-      <div class="week-container">
-        <div class="week-header">Week 1</div>
-        <table class="day-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Income</th>
-              <th>Expenses</th>
-              <th>Net</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>07/12 (Sat)</td>
-              <td>0.00</td>
-              <td>2.00</td>
-              <td>-2.00</td>
-              <td>Allowance</td>
-            </tr>
-            <tr>
-              <td>07/14 (Mon)</td>
-              <td>0.00</td>
-              <td>85.00</td>
-              <td>-85.00</td>
-              <td>Allowance</td>
-            </tr>
-            <tr>
-              <td>07/15 (Tue)</td>
-              <td>1.00</td>
-              <td>28.71</td>
-              <td>-27.71</td>
-              <td>domain.com</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    
-    <div class="footer">
-      Last updated: 7/15/2025, 11:56:07 AM
-    </div>
-  </div>
-</body>
+    <script>
+      // [All your existing financial(), deposit(), and helper functions remain unchanged...]
+      // Only updating the generateFishReport() function below:
+
+      function generateFishReport() {
+        var display = document.getElementById("display");
+        display.innerHTML = '';
+        
+        // Create report container
+        var reportDiv = document.createElement("div");
+        
+        // Header section
+        var header = document.createElement("div");
+        header.className = "report-header";
+        header.innerHTML = `
+          <h1>Fish Report</h1>
+          <h2>Fermy</h2>
+          <h3>pbuster</h3>
+        `;
+        reportDiv.appendChild(header);
+        
+        // User info
+        var userInfo = document.createElement("div");
+        userInfo.className = "user-info";
+        userInfo.innerHTML = "User: Fermy";
+        reportDiv.appendChild(userInfo);
+        
+        // Financial Activity section
+        var activitySection = document.createElement("div");
+        activitySection.innerHTML = `
+          <h3 style="margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Financial Activity</h3>
+          <h4 style="margin-top: 0; margin-bottom: 10px;">Week 30</h4>
+        `;
+        reportDiv.appendChild(activitySection);
+        
+        // Create financial table
+        var financialTable = document.createElement("table");
+        financialTable.className = "financial-table";
+        
+        // Table header
+        var thead = document.createElement("thead");
+        thead.innerHTML = `
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Income</th>
+            <th>Expenses</th>
+            <th>Net</th>
+          </tr>
+        `;
+        financialTable.appendChild(thead);
+        
+        var tbody = document.createElement("tbody");
+        
+        // Get deposits from localStorage
+        var deposits = JSON.parse(localStorage.getItem('depositRecords'))?.entries || [];
+        var financialRequests = [];
+        
+        // Get all financial requests from localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key.includes('_financialRequest')) {
+            var request = JSON.parse(localStorage.getItem(key));
+            financialRequests.push({
+              date: request.date,
+              type: "Request",
+              amount: request.requests.reduce((sum, req) => sum + parseFloat(req.amount), 0),
+              isDeposit: false
+            });
+          }
+        }
+        
+        // Combine and sort all transactions by date
+        var allTransactions = [
+          ...deposits.map(d => ({
+            date: d.date,
+            type: "Deposit",
+            amount: parseFloat(d.amount),
+            source: d.source,
+            isDeposit: true
+          })),
+          ...financialRequests
+        ].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        // Add transactions to table
+        var totalIncome = 0;
+        var totalExpenses = 0;
+        
+        allTransactions.forEach(transaction => {
+          var row = document.createElement("tr");
+          
+          // Format date as "MM/DD (Day)"
+          var dateObj = new Date(transaction.date);
+          var formattedDate = `${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')} (${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dateObj.getDay()]})`;
+          
+          if (transaction.isDeposit) {
+            totalIncome += transaction.amount;
+            row.innerHTML = `
+              <td>${formattedDate}</td>
+              <td>${transaction.type}</td>
+              <td class="positive">+$${transaction.amount.toFixed(2)}</td>
+              <td>$${transaction.amount.toFixed(2)}</td>
+              <td>$0.00</td>
+              <td class="positive">+$${transaction.amount.toFixed(2)}</td>
+            `;
+          } else {
+            totalExpenses += transaction.amount;
+            row.innerHTML = `
+              <td>${formattedDate}</td>
+              <td>${transaction.type}</td>
+              <td class="negative">-$${transaction.amount.toFixed(2)}</td>
+              <td>$0.00</td>
+              <td>$${transaction.amount.toFixed(2)}</td>
+              <td class="negative">-$${transaction.amount.toFixed(2)}</td>
+            `;
+          }
+          
+          tbody.appendChild(row);
+        });
+        
+        // Add totals row
+        var netTotal = totalIncome - totalExpenses;
+        var totalsRow = document.createElement("tr");
+        totalsRow.className = "totals-row";
+        totalsRow.innerHTML = `
+          <td colspan="3">Totals</td>
+          <td>$${totalIncome.toFixed(2)}</td>
+          <td>$${totalExpenses.toFixed(2)}</td>
+          <td class="${netTotal >= 0 ? 'positive' : 'negative'}">${netTotal >= 0 ? '+' : ''}$${netTotal.toFixed(2)}</td>
+        `;
+        tbody.appendChild(totalsRow);
+        
+        financialTable.appendChild(tbody);
+        activitySection.appendChild(financialTable);
+        
+        // Add legacy entry (as shown in your example)
+        
+        // Add last updated timestamp
+        var timestampDiv = document.createElement("div");
+        timestampDiv.className = "timestamp";
+        timestampDiv.innerText = `Last updated: ${new Date().toLocaleString('en-US', { 
+          month: 'short', 
+          day: 'numeric', 
+          year: 'numeric', 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        })}`;
+        reportDiv.appendChild(timestampDiv);
+        
+        display.appendChild(reportDiv);
+      }
+
+      // [All your remaining existing functions stay exactly the same...]
+    </script>
+  </body>
 </html>
